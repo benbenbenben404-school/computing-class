@@ -1,0 +1,51 @@
+<html>
+
+	<body>
+		
+		<script>
+			
+			function send_message() {
+				var message = document.forms["message_form"]["message"].value
+				var username= document.forms["message_form"]["username"].value
+				if (message == "" || username == "" ) {
+
+					return false;
+				}
+				var xmlhttp = new XMLHttpRequest();
+				
+				xmlhttp.open("POST", "send_message.php?message="+message+"&username="+username, true);
+				xmlhttp.send();
+				document.forms["message_form"]["message"].value = ""
+				return false;
+			}
+			
+			function poll_message(){
+		        var xmlhttp = new XMLHttpRequest();
+		        xmlhttp.onreadystatechange = function() {
+		            if (this.readyState == 4 && this.status == 200) {
+		                document.getElementById("message_box").innerHTML = this.responseText;
+		            }
+		        };
+				
+				var now = new Date();
+		        xmlhttp.open("POST", "poll_server.php", true);
+		        xmlhttp.send();
+			}
+			setInterval(poll_message,1000)
+		</script>
+		
+		<form onsubmit = "return send_message()" name="message_form">
+			
+			Username: <input type = "text" name = "username"><br>
+			  Message: <input type = "text" name = "message" style="width:100%;">
+			
+			<button type = "button" onclick = "send_message()">Send message</button>
+		
+		</form>
+		
+		<div id = "message_box">
+			
+			</div>
+	</body>
+	
+</html>
