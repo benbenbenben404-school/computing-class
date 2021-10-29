@@ -1,22 +1,22 @@
 /*CSS variables used to provide the two themes*/
 /*The variables in :root are the defualt, dark mode, variables, and the ones in [data-theme="light"] are for light mode, and must be enabled via JS*/
 :root {
-    --text-col:#ffffff ;
-    --text-col-muted:#DDDDDD ;
-    --red-col:#DC3522 ;
-    --main-bg:#1E1E20 ;
-    --highlight-bg:#374140 ;
-    --highlight-bg2:#2A2C2B ;
+  --text-col: #ffffff;
+  --text-col-muted: #DDDDDD;
+  --red-col: #DC3522;
+  --main-bg: #1E1E20;
+  --highlight-bg: #374140;
+  --highlight-bg2: #2A2C2B;
 }
 
 
 [data-theme="light"] {
-    --text-col:#37373a ;
-    --text-col-muted:#473232 ;
-    --red-col:#ff6d5d ;
-    --main-bg:#f6f6f6 ;
-    --highlight-bg:#e2e2e2 ;
-    --highlight-bg2:#bfc2c2 ;
+  --text-col: #37373a;
+  --text-col-muted: #473232;
+  --red-col: #ff6d5d;
+  --main-bg: #f6f6f6;
+  --highlight-bg: #e2e2e2;
+  --highlight-bg2: #bfc2c2;
 }
 
 /*CSS to style the scrollbar*/
@@ -28,69 +28,70 @@
 /* Track */
 ::-webkit-scrollbar-track {
 
-	border-radius: 5px;
-	background-color: var(--highlight-bg);
+  border-radius: 5px;
+  background-color: var(--highlight-bg2);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background-color: var(--highlight-bg2);
+  background-color: var(--highlight-bg);
   border-radius: 5px;
 }
 
 /*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
 * {
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
+  scrollbar-width: thin;
 }
 
-body {	
-    background-color: var(--main-bg);
-	display: flex;
+body {
+  background-color: var(--main-bg);
+
 }
 
 /*Styling for _main-heading_*/
 h1 {
-    text-align: center;
-    font-size: 6em;
-    color: var(--text-col);
-    font-weight: 900;
-    
+  text-align: center;
+  font-size: 6em;
+  color: var(--text-col);
+  font-weight: 900;
+
 }
 
 
 /*_Used on Lanidng page, signup page, and login page to center items and keep things centered. Uses Flexbox for layout purposes*/
-.center-container{
-    margin: auto;
-    width: 100%;    
-    height: 100%;
-
+.center-container {
+  margin: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-    max-width: 800px;
-    align-content: center
+
+  max-width: 800px;
+  align-content: center;
 }
 
 /*Main button used thoruhgout the website*/
 /*Note that this class can bea dded to "a" elements, input elements, and button elements*/
 .main-button {
-    background-color: var(--red-col);
-    text-decoration: none;
-    color: var(--text-col);
-    border-radius: 1.5em;
-    font-weight:900;
-    font-size: 3em;
-    min-width:300px;
-    margin:10px auto 0px auto;
-     appearance: button;
-    text-align: center;
+  background-color: var(--red-col);
+  text-decoration: none;
+  color: var(--text-col);
+  border-radius: 1.5em;
+  font-weight: 900;
+  font-size: 3em;
+  min-width: 300px;
+  margin: 10px auto 0px auto;
+  appearance: button;
+  text-align: center;
 }
 
 /*Styling for the login and signup forms*/
-.auth-form{
+.auth-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,125 +100,146 @@ h1 {
 
 /*genreic styling for inputs, mostly removing some ugly defualt styles*/
 /*note that -webkit-appearance:none; is nescesary to deal with weirdness on safari*/
-input{
-    border:none;
-    outline: none;
-      font-family: inherit;
-    margin-top:10px;
-   -webkit-appearance: none;
+input {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  margin-top: 10px;
+  -webkit-appearance: none;
 }
 
 /*Styling for text inputs*/
-input[type=text]{
-	
+input[type=text] {
 
-
+  background-color: var(--highlight-bg);
+  padding: 10px 10px 10px 20px;
+  color: var(--text-col);
+  font-size: 2em;
+  border-radius: 1.5em
 }
+
 /*Styling the placeholder text  inside text-inputs*/
 ::placeholder {
 
-    color:var(--text-col-muted);
+  color: var(--text-col-muted);
 }
 
 @media (max-width: 800px) {
-  .main-window,.side-window {
-	width:100% !important;
+
+  .main-window,
+  .side-window {
+    width: 100% !important;
   }
-	.side-window{
-		display: none;
-	}
-	.chat-header > span {
-	display: inline-block !important;
-}
+
+  .side-window {
+    display: none;
+  }
+
+  .chat-header>span {
+    display: inline-block !important;
+  }
 }
 
 
 .chat-header {
-	border-width: 0px;
-	border-bottom-width:1px;
-	border-style: solid;
-	border-color: var(--text-col);
+  border-width: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: var(--text-col);
 }
-.chat-header > h2 {
-	font-size: 2em;
-	color:var(--text-col);
+
+.chat-header>h2 {
+  font-size: 2em;
+  color: var(--text-col);
   display: inline-block;
 }
 
-.chat-header > span {
-	font-size: 2em;
-	float: right;
-	  display: none;
+.chat-header>span {
+  font-size: 2em;
+  float: right;
+  display: none;
 
 }
 
-.main-window{
-		padding:1em;
+.main-window {
+  padding: 0em;
 
-	width:70%;
-	display:flex;
-	flex-direction: column;
-	height:100%;
-	
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
 }
+
 .side-window {
-	width:30%;
+  display: flex;
+  width: 30%;
 }
 
 
-.chat{
-	flex-grow: 1;
-	overflow-y: scroll;
+.chat {
+  flex-grow: 1;
+  overflow-y: scroll;
 }
 
 
-.message{
-	color:var(--text-col);
-	font-size: 1em;
+.message {
+  color: var(--text-col);
+  font-size: 1em;
 
 
 }
 
-.message >span> time {
-	color:var(--text-col-muted);
-	font-size: 0.8em;
-	padding:0 5px 0 5px;
+.message>span>time {
+  color: var(--text-col-muted);
+  font-size: 0.8em;
+  padding: 0 5px 0 5px;
 }
-.message >span> b {
-	color: hsl(1,60%,50%);
-	font-size: 1em;
-	
-		
-}
-.message >span {
-	display:flex;
-	  align-items: center;
 
-	
+.message>span>b {
+  color: hsl(1, 60%, 50%);
+  font-size: 1em;
+
+
 }
-.user-message > span {
+
+.message>span {
+  display: flex;
+  align-items: center;
+
+
+}
+
+.user-message {
   justify-content: flex-end;
-		
-}
-.user-message > span >b{
-	order:2;
-	color: hsl(120,60%,50%);
+  text-align: right;}
+
+.user-message>span {
+  justify-content: flex-end;
 
 }
 
-.message-box{
-	display: flex;
-	padding:10px 10px 10px 20px !important;
-	border-radius: calc(0.5em + 20px) !important;
-	background-color: var(--highlight-bg);
+.user-message>span>b {
+  order: 2;
+  color: hsl(120, 60%, 50%);
+
+}
+
+.message-box {
+  display: flex;
+  padding: 10px 10px 10px 20px !important;
+  border-radius: calc(0.5em + 20px) !important;
+  background-color: var(--highlight-bg);
 
 
 
 }
-.message-box > input{
-    background-color: transparent;
-	margin-top: 0px !important;
-    color:var(--text-col);
-	flex-grow: 2;
-	font-size: 1em !important;
+
+.message-box>input {
+  background-color: transparent;
+  margin-top: 0px !important;
+  color: var(--text-col);
+  flex-grow: 2;
+  padding: 0px !important;
+  font-size: 1em !important;
 }
