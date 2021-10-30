@@ -172,7 +172,6 @@ input[type=text] {
 }
 
 .side-window {
-  display: flex;
   width: 30%;
 }
 
