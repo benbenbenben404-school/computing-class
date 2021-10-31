@@ -15,8 +15,58 @@
   --text-col-muted: #473232;
   --red-col: #ff6d5d;
   --main-bg: #f6f6f6;
-  --highlight-bg: #e2e2e2;
-  --highlight-bg2: #bfc2c2;
+  /* --highlight-bg: #e2e2e2;
+  --highlight-bg2: #bfc2c2; */
+  --highlight-bg: #bfc2c2;
+  --highlight-bg2: #e2e2e2;
+
+}
+
+
+#manage-window {
+  display: none !important;
+}
+
+.modal-bg{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  backdrop-filter: blur(5px) brightness(0.7); /* Fallback color */
+  display: flex;
+}
+.modal{
+  padding: 20 50 20 50;
+  background-color: var(--main-bg);
+  margin: auto auto; /* 15% from the top and centered */
+  border: 1px none #888;
+  border-radius: 50px;
+  min-height: 500px;
+  min-width: 500px;
+  max-width: 800px;
+
+}
+.modal input{
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-header>h2 {
+  font-size: 2em;
+  color: var(--text-col);
+}
+
+.modal-header >span {
+  font-size: 2em;
+  float: right;
+
 }
 
 /*CSS to style the scrollbar*/
@@ -40,16 +90,19 @@
 
 /*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
   scrollbar-width: thin;
+  color: var(--text-col)
 }
 
 body {
   background-color: var(--main-bg);
+  display: flex;
+  height: 100%;
 
 }
 
@@ -66,7 +119,9 @@ h1 {
 /*_Used on Lanidng page, signup page, and login page to center items and keep things centered. Uses Flexbox for layout purposes*/
 .center-container {
   margin: auto;
-  height: 100%;
+  justify-self: center;
+  align-self: center;
+  flex-grow: 50;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,9 +130,15 @@ h1 {
   align-content: center;
 }
 
+
+.center-container .main-button {
+  align-self: center;
+
+}
 /*Main button used thoruhgout the website*/
 /*Note that this class can bea dded to "a" elements, input elements, and button elements*/
 .main-button {
+  border: none;
   background-color: var(--red-col);
   text-decoration: none;
   color: var(--text-col);
@@ -85,9 +146,41 @@ h1 {
   font-weight: 900;
   font-size: 3em;
   min-width: 300px;
-  margin: 10px auto 0px auto;
-  appearance: button;
+  margin: 10px 0px 0px 0px;
   text-align: center;
+
+}
+
+.small-button{
+  border: none;
+  background-color: var(--red-col);
+  text-decoration: none;
+  color: var(--text-col);
+  border-radius: 1.5em;
+  font-weight: 900;
+  font-size: 1em;
+  min-width: 100px;
+  margin: 00px 0px 0px 0px;
+  text-align: center;
+  padding: 2px 5px 2px 5px;
+  align-self: center;
+
+}
+.small-indicator{
+  border: var(--red-col) solid 3px;
+  background-color: var(--main-bg);
+
+  text-decoration: none;
+  color: var(--text-col);
+  border-radius: 1.5em;
+  font-weight: 900;
+  font-size: 1em;
+  min-width: 100px;
+  margin: 00px 0px 0px 0px;
+  text-align: center;
+  padding: 2px 5px 2px 5px;
+  align-self: center;
+
 }
 
 /*Styling for the login and signup forms*/
@@ -131,8 +224,8 @@ input[type=text] {
     width: 100% !important;
   }
 
-  .side-window {
-    display: none;
+  .main-window {
+    display: none !important;
   }
 
   .chat-header>span {
@@ -162,7 +255,7 @@ input[type=text] {
 }
 
 .main-window {
-  padding: 0em;
+  padding: 0em 1em 1em 1em;
 
   width: 70%;
   display: flex;
@@ -172,15 +265,67 @@ input[type=text] {
 }
 
 .side-window {
-  width: 30%;
+  padding: 0em 1em 1em 0em;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1
 }
 
+
+.side-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-width: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: var(--text-col);
+}
+
+.side-header>h2 {
+  font-size: 2em;
+}
+
+.side-header>button {
+  align-self: center;
+}
+
+
+.chat-descriptor {
+  display: flex;
+  padding: 2px 0px 2px 0px;
+}
+
+.chat-descriptor>p {
+  font-size: 1.5em;
+  display: inline;
+
+}
+
+.chat-descriptor>span {
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
+  text-align: center;
+  background-color: var(--red-col);
+  font-size: 1.5em;
+  font-weight: 900;
+  margin-left: auto;
+}
+
+.chat-descriptor>button {
+  float: right;
+}
 
 .chat {
   flex-grow: 1;
   overflow-y: scroll;
 }
 
+circle {
+  fill: var(--text-col);
+}
 
 .message {
   color: var(--text-col);
@@ -211,7 +356,8 @@ input[type=text] {
 
 .user-message {
   justify-content: flex-end;
-  text-align: right;}
+  text-align: right;
+}
 
 .user-message>span {
   justify-content: flex-end;
@@ -242,3 +388,48 @@ input[type=text] {
   padding: 0px !important;
   font-size: 1em !important;
 }
+
+.side-bottom {
+  border-top: var(--text-col) solid 1px;
+  display: flex;
+  justify-content: space-between;
+  justify-self: stretch;
+  padding: 10px 0px 0px 0px;
+  margin-top: auto;
+}
+
+
+
+.display-box {
+  background-color: var(--highlight-bg2);
+  border-radius: 20px;
+  margin: 20px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y:hidden;
+
+}
+
+.members{
+  overflow-y: scroll;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.members  b {
+  font-size: 1.5em;
+
+}
+.main-window  .main-button{
+  align-self: flex-start;
+}
+
+.display-box span{
+  padding: 4px ;
+  display: flex;
+  justify-content:space-between;
+}
+.display-box .main-button{
+margin-top:auto;}

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<main class="main-window">
+	<main class="main-window" id="chat-window">
 		<header class="chat-header">
 			<h2>Chat name</h2>
 			<span onclick="console.log('close chat')">❌</span>
@@ -215,9 +215,109 @@
 			<button>➡️ </button>
 		</div>
 	</main>
+	<main class="main-window" id="manage-window">
+		<header class="chat-header">
+			<h2>Chat name</h2>
+
+			<span onclick="console.log('close chat')">❌</span>
+		</header>
+		<button class="main-button"style="display: none;">
+			Delete chat
+		</button>
+		<button class="main-button">
+			Leave chat
+		</button>
+		<section class="display-box">
+			<div class="members">
+				<span>
+					<b>Username</b>
+					<button class="small-indicator">Owner</button>
+				</span>
+
+				<span>
+					<b>Username</b>
+					<button class="small-button" >Remove</button>
+				</span>
+				
+			</div>
+
+			<button class="main-button" >
+				Add people
+			</button>
+		</section>
+	</main>
+	<main class="modal-bg">
+		<div class="modal">
+			<header class="modal-header">
+				<h2>Chat name</h2>
+				<span onclick="console.log('close chat')">❌</span>
+
+
+			</header>
+			<input type="text" placeholder="Chat name...">
+			<input type="text" placeholder="Search for users...">
+			<section class="display-box">
+				<div class="members">
+					<span>
+						<b>Username</b>
+						<button class="small-indicator">Owner</button>
+					</span>
+	
+					<span>
+						<b>Username</b>
+						<button class="small-button" >Remove</button>
+					</span>
+					
+				</div>
+	
+				<button class="main-button" >
+				</button>
+			</section>
+	
+		</div>
+	</main>
 
 	<aside class="side-window">
-		a
+		<header class="side-header">
+			<h2>Chat name</h2>
+			<button class="small-button">Create new</button>
+		</header>
+		<span class="chat-descriptor">
+			<p onclick="">Lorem ipsum</p>
+			<span>12</span>
+
+
+			<svg width="20" height="40">
+				<circle cx="10" cy="10" r="3" />
+				<circle cx="10" cy="20" r="3" />
+				<circle cx="10" cy="30" r="3" />
+			</svg>
+
+		</span>
+		<span class="chat-descriptor">
+			<p>Family</p>
+			<span>1</span>
+			<svg width="20" height="40">
+				<circle cx="10" cy="10" r="3" />
+				<circle cx="10" cy="20" r="3" />
+				<circle cx="10" cy="30" r="3" />
+			</svg>
+		</span>
+		<span class="chat-descriptor">
+			<p>Lorem ipsum</p>
+			<span>3</span>
+			<svg width="20" height="40">
+				<circle cx="10" cy="10" r="3" />
+				<circle cx="10" cy="20" r="3" />
+				<circle cx="10" cy="30" r="3" />
+			</svg>
+		</span>
+		<section class="side-bottom">
+			<button class="small-button" onclick="toggleTheme()">Toggle Theme</button>
+			<button class="small-button">Log out</button>
+
+		</section>
+
 	</aside>
 </body>
 
