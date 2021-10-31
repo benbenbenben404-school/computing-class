@@ -23,7 +23,7 @@
 }
 
 
-#manage-window {
+ .modal-bg{
   display: none !important;
 }
 
@@ -262,6 +262,9 @@ input[type=text] {
   flex-direction: column;
   height: 100%;
 
+}
+#manage-window {
+  display: none;
 }
 
 .side-window {

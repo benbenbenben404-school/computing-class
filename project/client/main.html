@@ -221,7 +221,7 @@
 
 			<span onclick="console.log('close chat')">❌</span>
 		</header>
-		<button class="main-button"style="display: none;">
+		<button class="main-button" style="display: none;">
 			Delete chat
 		</button>
 		<button class="main-button">
@@ -236,12 +236,12 @@
 
 				<span>
 					<b>Username</b>
-					<button class="small-button" >Remove</button>
+					<button class="small-button">Remove</button>
 				</span>
-				
+
 			</div>
 
-			<button class="main-button" >
+			<button class="main-button" onclick="document.getElementById('modal-bg').style.display = 'flex';">
 				Add people
 			</button>
 		</section>
@@ -262,18 +262,18 @@
 						<b>Username</b>
 						<button class="small-indicator">Owner</button>
 					</span>
-	
+
 					<span>
 						<b>Username</b>
-						<button class="small-button" >Remove</button>
+						<button class="small-button">Remove</button>
 					</span>
-					
+
 				</div>
-	
-				<button class="main-button" >
+
+				<button class="main-button">
 				</button>
 			</section>
-	
+
 		</div>
 	</main>
 
@@ -283,11 +283,14 @@
 			<button class="small-button">Create new</button>
 		</header>
 		<span class="chat-descriptor">
-			<p onclick="">Lorem ipsum</p>
+			<p
+				onclick="document.getElementById('manage-window').style.display = 'none';document.getElementById('chat-window').style.display = 'flex'">
+				Lorem ipsum</p>
 			<span>12</span>
 
 
-			<svg width="20" height="40">
+			<svg onclick="document.getElementById('manage-window').style.display = 'flex';document.getElementById('chat-window').style.display = 'none'"
+				width="20" height="40">
 				<circle cx="10" cy="10" r="3" />
 				<circle cx="10" cy="20" r="3" />
 				<circle cx="10" cy="30" r="3" />
