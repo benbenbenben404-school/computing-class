@@ -23,9 +23,8 @@
 }
 
 
- .modal-bg{
-  display: none !important;
-}
+
+
 
 .modal-bg{
   position: fixed; /* Stay in place */
@@ -36,7 +35,7 @@
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   backdrop-filter: blur(5px) brightness(0.7); /* Fallback color */
-  display: flex;
+  display: none;
 }
 .modal{
   padding: 20 50 20 50;
@@ -224,7 +223,7 @@ input[type=text] {
     width: 100% !important;
   }
 
-  .main-window {
+  .side-window {
     display: none !important;
   }
 
@@ -239,6 +238,8 @@ input[type=text] {
   border-bottom-width: 1px;
   border-style: solid;
   border-color: var(--text-col);
+  display:flex;
+  justify-content:space-between;
 }
 
 .chat-header>h2 {
@@ -247,9 +248,23 @@ input[type=text] {
   display: inline-block;
 }
 
+
+.close {
+  
+  align-self:center;
+  height:2em;
+  width:2em;
+
+  
+    stroke:var(--red-col);
+    stroke-width:20;
+stroke-linecap:round;
+
+
+}
+
 .chat-header>span {
-  font-size: 2em;
-  float: right;
+  float:right;
   display: none;
 
 }
@@ -392,6 +407,19 @@ circle {
   font-size: 1em !important;
 }
 
+.message-box>button {
+  background-color: transparent;
+    height: 100%;
+    width: 2em;
+    
+}
+.message-box svg {
+  fill: var(--text-col);
+  
+    height: 100%;
+    width: 100%;
+
+}
 .side-bottom {
   border-top: var(--text-col) solid 1px;
   display: flex;
