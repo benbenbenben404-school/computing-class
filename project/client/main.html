@@ -56,7 +56,7 @@
 				<svg   viewBox="0,0,100,80">
 				  <polygon points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 "  />
 				</svg> 
-</button>
+            </button>
 		</div>
 	</main>
 	<main class="main-window" id="manage-window">
@@ -91,55 +91,18 @@
 
 			</div>
 
-			<button class="main-button" onclick="document.getElementById('create-chat-modal').style.display = 'flex';">
+			<button class="main-button" onclick="document.getElementById('add-people-modal').style.display = 'flex';">
 				Add people
 			</button>
 		</section>
 	</main>
-	<main class="modal-bg" id= "create-chat-modal">
-		<div class="modal">
-			<header class="modal-header">
-				<h2>Create new chat</h2>
-			<span onclick="document.getElementById('create-chat-modal').style.display='none'" class="close">
-				
-							<svg   viewBox="0,0,100,100">
-				    <line x1="15" y1="15" x2="85" y2="85"  />
-				    <line x1="85" y1="15" x2="15" y2="85"  />
-				</svg> 
-			</span>
-
-
-			</header>
-			<input type="text" placeholder="Chat name...">
-			<input type="text" placeholder="Search for users...">
-			<section class="display-box">
-				<div class="members">
-					<span>
-						<b>Username</b>
-						<button class="small-indicator">Owner</button>
-					</span>
-
-					<span>
-						<b>Username</b>
-						<button class="small-button">Remove</button>
-					</span>
-
-				</div>
-
-				<button class="main-button">
-				</button>
-			</section>
-
-		</div>
-	</main>
-
 	<aside class="side-window">
 		<header class="side-header">
 			<h2>Chat name</h2>
 			<button class="small-button" onclick="document.getElementById('create-chat-modal').style.display = 'flex'">Create new</button>
 		</header>
 		<span class="chat-descriptor">
-			<p
+			<p   
 				onclick="document.getElementById('manage-window').style.display = 'none';document.getElementById('chat-window').style.display = 'flex'">
 				Lorem ipsum</p>
 			<span>12</span>
@@ -155,7 +118,7 @@
 		</span>
 		<span class="chat-descriptor">
 			<p>Family</p>
-			<span>1</span>
+			<span style="display: none;">1</span>
 			<svg width="20" height="40">
 				<circle cx="10" cy="10" r="3" />
 				<circle cx="10" cy="20" r="3" />
@@ -178,6 +141,85 @@
 		</section>
 
 	</aside>
+    <main class="modal-bg" id= "add-people-modal">
+		<div class="modal">
+			<header class="modal-header">
+                <h2>Add People</h2>
+                <span onclick="document.getElementById('add-people-modal').style.display='none'" class="close">
+
+                    <svg   viewBox="0,0,100,100">
+                        <line x1="15" y1="15" x2="85" y2="85"  />
+                        <line x1="85" y1="15" x2="15" y2="85"  />
+                    </svg> 
+                </span>
+
+
+			</header>
+			<input type="text" placeholder="Search for users...">
+			<section class="display-box">
+				<div class="members">
+                    <span>
+                        <b>Username</b>
+                        <button class="small-button">Add</button>
+                    </span>
+
+                    <span>
+                        <b>Username</b>
+                        <button class="small-indicator">Added</button>
+                    </span>
+                     <span>
+                        <b>Username</b>
+                        <button class="small-button">Add</button>
+                    </span>
+
+
+				</div>
+
+				<button class="main-button">
+				</button>
+			</section>
+
+		</div>
+	</main>
+	<main class="modal-bg" id= "create-chat-modal">
+		<div class="modal">
+			<header class="modal-header">
+				<h2>Create new chat</h2>
+                <span onclick="document.getElementById('create-chat-modal').style.display='none'" class="close">
+
+                                <svg   viewBox="0,0,100,100">
+                        <line x1="15" y1="15" x2="85" y2="85"  />
+                        <line x1="85" y1="15" x2="15" y2="85"  />
+                    </svg> 
+                </span>
+
+
+			</header>
+			<input type="text" placeholder="Chat name...">
+			<input type="text" placeholder="Search for users...">
+			<section class="display-box">
+				<div class="members">
+	                   <span>
+                        <b>Username</b>
+                        <button class="small-button">Add</button>
+                    </span>
+
+                    <span>
+                        <b>Username</b>
+                        <button class="small-indicator">Added</button>
+                    </span>
+                    
+
+				</div>
+
+			</section>
+
+				<button class="main-button">
+                    Create
+				</button>
+		</div>
+	</main>
+
 </body>
 
 </html>

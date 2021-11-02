@@ -1,3 +1,9 @@
+/*Temporary, just for testing purposes*/
+
+#manage-window {
+  display: none;
+}
+
 /*CSS variables used to provide the two themes*/
 /*The variables in :root are the defualt, dark mode, variables, and the ones in [data-theme="light"] are for light mode, and must be enabled via JS*/
 :root {
@@ -22,51 +28,17 @@
 
 }
 
-
-
-
-
-.modal-bg{
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  backdrop-filter: blur(5px) brightness(0.7); /* Fallback color */
-  display: none;
-}
-.modal{
-  padding: 20 50 20 50;
-  background-color: var(--main-bg);
-  margin: auto auto; /* 15% from the top and centered */
-  border: 1px none #888;
-  border-radius: 50px;
-  min-height: 500px;
-  min-width: 500px;
-  max-width: 800px;
-
-}
-.modal input{
-  width: 100%;
+/*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
+  scrollbar-width: thin;
+  color: var(--text-col)
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal-header>h2 {
-  font-size: 2em;
-  color: var(--text-col);
-}
-
-.modal-header >span {
-  font-size: 2em;
-  float: right;
-
-}
 
 /*CSS to style the scrollbar*/
 /* width */
@@ -87,106 +59,10 @@
   border-radius: 5px;
 }
 
-/*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
-  scrollbar-width: thin;
-  color: var(--text-col)
-}
-
 body {
   background-color: var(--main-bg);
   display: flex;
   height: 100%;
-
-}
-
-/*Styling for _main-heading_*/
-h1 {
-  text-align: center;
-  font-size: 6em;
-  color: var(--text-col);
-  font-weight: 900;
-
-}
-
-
-/*_Used on Lanidng page, signup page, and login page to center items and keep things centered. Uses Flexbox for layout purposes*/
-.center-container {
-  margin: auto;
-  justify-self: center;
-  align-self: center;
-  flex-grow: 50;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  max-width: 800px;
-  align-content: center;
-}
-
-
-.center-container .main-button {
-  align-self: center;
-
-}
-/*Main button used thoruhgout the website*/
-/*Note that this class can bea dded to "a" elements, input elements, and button elements*/
-.main-button {
-  border: none;
-  background-color: var(--red-col);
-  text-decoration: none;
-  color: var(--text-col);
-  border-radius: 1.5em;
-  font-weight: 900;
-  font-size: 3em;
-  min-width: 300px;
-  margin: 10px 0px 0px 0px;
-  text-align: center;
-
-}
-
-.small-button{
-  border: none;
-  background-color: var(--red-col);
-  text-decoration: none;
-  color: var(--text-col);
-  border-radius: 1.5em;
-  font-weight: 900;
-  font-size: 1em;
-  min-width: 100px;
-  margin: 00px 0px 0px 0px;
-  text-align: center;
-  padding: 2px 5px 2px 5px;
-  align-self: center;
-
-}
-.small-indicator{
-  border: var(--red-col) solid 3px;
-  background-color: var(--main-bg);
-
-  text-decoration: none;
-  color: var(--text-col);
-  border-radius: 1.5em;
-  font-weight: 900;
-  font-size: 1em;
-  min-width: 100px;
-  margin: 00px 0px 0px 0px;
-  text-align: center;
-  padding: 2px 5px 2px 5px;
-  align-self: center;
-
-}
-
-/*Styling for the login and signup forms*/
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
 }
 
@@ -212,9 +88,130 @@ input[type=text] {
 
 /*Styling the placeholder text  inside text-inputs*/
 ::placeholder {
-
   color: var(--text-col-muted);
 }
+/*Styling for _main-heading_*/
+h1 {
+  text-align: center;
+  font-size: 6em;
+  font-weight: 900;
+
+}
+
+.modal-bg{
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  backdrop-filter: blur(5px) brightness(0.7); 
+  display: none;
+}
+
+.modal{
+  padding: 20 50 20 50;
+  background-color: var(--main-bg);
+  margin: auto auto; /* 15% from the top and centered */
+  border: 1px none #888;
+  border-radius: 50px;
+  min-height: 500px;
+  min-width: 500px;
+  max-width: 800px;
+    max-height:80%;
+      display: flex;
+    flex-direction: column;
+    flex-grow:1;
+}
+.modal button{
+align-self: center;
+}
+.modal input[type=text]{
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-header>h2 {
+  font-size: 3em;
+}
+
+.modal-header >span {
+  font-size: 2em;
+  float: right;
+
+}
+
+/*_Used on Lanidng page, signup page, and login page to center items and keep things centered. Uses Flexbox for layout purposes*/
+.center-container {
+  margin: auto;
+  justify-self: center;
+  align-self: center;
+  flex-grow: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  max-width: 800px;
+  align-content: center;
+}
+/*Styling for the login and signup forms*/
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.center-container .main-button {
+  align-self: center;
+
+}
+/*Main button used thoruhgout the website*/
+/*Note that this class can bea dded to "a" elements, input elements, and button elements*/
+
+.small-button,.main-button{
+  border: none;
+  background-color: var(--red-col);
+  text-decoration: none;
+  border-radius: 1.5em;
+  font-weight: 900;
+  text-align: center;
+
+}
+
+.main-button {
+  font-size: 3em;
+  min-width: 300px;
+  margin: 10px 0px 0px 0px;
+}
+
+.small-button{
+  font-size: 1em;
+  min-width: 100px;
+  padding: 2px 5px 2px 5px;
+
+}
+.small-indicator{
+  border: var(--red-col) solid 3px;
+  background-color: var(--main-bg);
+  text-decoration: none;
+  border-radius: 1.5em;
+  font-weight: 900;
+  font-size: 1em;
+  min-width: 100px;
+  text-align: center;
+  align-self: center;
+  padding: 2px 5px 2px 5px;
+
+}
+
+
+
 
 @media (max-width: 800px) {
 
@@ -233,7 +230,7 @@ input[type=text] {
 }
 
 
-.chat-header {
+.chat-header,.side-header {
   border-width: 0px;
   border-bottom-width: 1px;
   border-style: solid;
@@ -242,34 +239,33 @@ input[type=text] {
   justify-content:space-between;
 }
 
-.chat-header>h2 {
+.chat-header>h2 ,.side-header>h2 {
   font-size: 2em;
-  color: var(--text-col);
   display: inline-block;
 }
 
 
-.close {
-  
-  align-self:center;
-  height:2em;
-  width:2em;
 
-  
+.side-header>button {
+  align-self: center;
+}
+
+
+.close {
+    align-self:center;
+    height:2em;
+    width:2em;
     stroke:var(--red-col);
     stroke-width:20;
-stroke-linecap:round;
-
-
+    stroke-linecap:round;
 }
 
-.chat-header>span {
+.chat-header>.close {
   float:right;
   display: none;
-
 }
 
-.main-window {
+.main-window,.side-window {
   padding: 0em 1em 1em 1em;
 
   width: 70%;
@@ -278,78 +274,39 @@ stroke-linecap:round;
   height: 100%;
 
 }
-#manage-window {
-  display: none;
-}
 
-.side-window {
-  padding: 0em 1em 1em 0em;
-
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1
-}
-
-
-.side-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border-width: 0px;
-  border-bottom-width: 1px;
-  border-style: solid;
-  border-color: var(--text-col);
-}
-
-.side-header>h2 {
-  font-size: 2em;
-}
-
-.side-header>button {
-  align-self: center;
-}
+.main-window {width: 70%;}
+.side-window {width: 30%;}
 
 
 .chat-descriptor {
   display: flex;
   padding: 2px 0px 2px 0px;
+  font-size: 1.5em;
+
 }
 
 .chat-descriptor>p {
-  font-size: 1.5em;
   display: inline;
+  margin-right: auto;
 
 }
 
+
+/*Styling for notification bubbles*/
 .chat-descriptor>span {
   height: 1.5em;
   width: 1.5em;
   border-radius: 50%;
   text-align: center;
   background-color: var(--red-col);
-  font-size: 1.5em;
   font-weight: 900;
-  margin-left: auto;
 }
 
-.chat-descriptor>button {
-  float: right;
-}
 
 .chat {
   flex-grow: 1;
   overflow-y: scroll;
-}
-
-circle {
-  fill: var(--text-col);
-}
-
-.message {
-  color: var(--text-col);
-  font-size: 1em;
-
-
 }
 
 .message>span>time {
@@ -360,16 +317,11 @@ circle {
 
 .message>span>b {
   color: hsl(1, 60%, 50%);
-  font-size: 1em;
-
-
 }
 
 .message>span {
   display: flex;
   align-items: center;
-
-
 }
 
 .user-message {
@@ -379,13 +331,11 @@ circle {
 
 .user-message>span {
   justify-content: flex-end;
-
 }
 
 .user-message>span>b {
   order: 2;
   color: hsl(120, 60%, 50%);
-
 }
 
 .message-box {
@@ -393,15 +343,11 @@ circle {
   padding: 10px 10px 10px 20px !important;
   border-radius: calc(0.5em + 20px) !important;
   background-color: var(--highlight-bg);
-
-
-
 }
 
 .message-box>input {
   background-color: transparent;
   margin-top: 0px !important;
-  color: var(--text-col);
   flex-grow: 2;
   padding: 0px !important;
   font-size: 1em !important;
@@ -411,15 +357,8 @@ circle {
   background-color: transparent;
     height: 100%;
     width: 2em;
-    
 }
-.message-box svg {
-  fill: var(--text-col);
-  
-    height: 100%;
-    width: 100%;
 
-}
 .side-bottom {
   border-top: var(--text-col) solid 1px;
   display: flex;
@@ -434,33 +373,43 @@ circle {
 .display-box {
   background-color: var(--highlight-bg2);
   border-radius: 20px;
-  margin: 20px;
+  margin-top: 10px;
   padding: 20px;
-  height: 100%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   overflow-y:hidden;
 
 }
-
 .members{
   overflow-y: scroll;
   height: auto;
   display: flex;
   flex-direction: column;
 }
-.members  b {
-  font-size: 1.5em;
+.members span{
+  padding: 4px ;
+  display: flex;
+  justify-content:space-between;
+}
 
+.members  b{
+  font-size: 1.5em;
 }
 .main-window  .main-button{
   align-self: flex-start;
 }
 
-.display-box span{
-  padding: 4px ;
-  display: flex;
-  justify-content:space-between;
-}
+
 .display-box .main-button{
-margin-top:auto;}
+margin-top:auto;
+}
+
+/*SVG styling*/
+circle {
+  fill: var(--text-col);
+}
+
+.message-box svg {
+  fill: var(--text-col);
+}
