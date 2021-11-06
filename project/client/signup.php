@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+
+        <link  rel="stylesheet" href="style.css">
+        <script src="theme.js"></script>
+      <meta charset="utf-8">
+
+    </head>
+    <body>
+
+        <section class="center-container">
+            <h1>
+                Sign Up
+            </h1>
+            <form action = "signup.php" method="post" class="auth-form">
+                <input type = "text" name="username" placeholder="Username...">
+                <input type = "text" name="password" placeholder="Password...">
+
+                <input type ="submit" class="main-button" value="Sign Up">
+                
+            </form>
+        <?php
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            echo $username;
+            echo strlen($username);
+            $valid = True;
+            $error = False;
+            if (mb_strlen($username) >30){
+            	$valid = False;
+            	$error = "Username too long";
+            }	
+            if (mb_strlen($password) >30){
+            	$valid = False;
+            	$error = "password too long";
+            }	
+            if (mb_strlen($password) <8){
+            	$valid = False;
+            	$error = "password too short";
+            }	
+            if (mb_strlen($username) >30){
+            	$valid = False;
+            	$error = "Username too long";
+            }	
+            if ($error){
+            	echo $error;
+            }
+            
+            
+            if ($valid){
+            	$servername = "127.0.0.1:50447";
+            	$serverusername = "azure";
+            	$password = "6#vWHD_$";
+            	$dbname = "chat";
+            	$conn = new mysqli($servername, $serverusername, $password, $dbname);
+                $conn->set_charset('utf8mb4');
+
+                $sql = "SELECT username, password_hash FROM user WHERE username='$username'";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                 echo "Username not unique";
+                 die();
+                }
+                $password_hashed = password_hash($password ,PASSWORD_DEFAULT );
+
+                $sql = "INSERT INTO user VALUES ('$username', '$password_hashed')";
+                $result = $conn->query($sql);
+            	$_SESSION["name"] = $username;
+                header('Location: main.html');
+
+            }
+        }
+        ?>
+
+    </body>
+</html>

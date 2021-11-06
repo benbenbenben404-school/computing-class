@@ -3,7 +3,7 @@
 $servername = "127.0.0.1:50447";
 $username = "azure";
 $password = "6#vWHD_$";
-$dbname = "testdb"; // only bit you need to change
+$dbname = "chat"; // only bit you need to change
 // Parsing connnection string
 foreach ($_SERVER as $key => $value) {
     if (strpos($key, "MYSQLCONNSTR_") !== 0) {
@@ -19,12 +19,13 @@ echo "information: ".$servername." ". $username." ".$password." ".$dbname;
 echo "<br>";
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "connection successful<br/>";
-}
 
+$sql = "SELECT username, password_hash FROM user WHERE username=$username";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+ echo "Username not unique";
+ die();
+}
 $result = mysqli_query($conn, "SELECT * FROM persons");
 
 //Use results to generate page content
