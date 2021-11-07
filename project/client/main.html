@@ -24,19 +24,23 @@
 				</svg> 
 			</span>
 		</header>
-		<section class="chat">
-			<div class="message">
-				<span>
-					<b>Username</b>
-					<time> 8th jan</time>
-				</span>
-				<p>
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-					industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-					and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-					leap into
-				</p>
-			</div>
+		<section class="chat" id="chat">
+			<template id = "message">
+				<div class="message">
+					<span>
+						<b>Username</b>
+						<time> 8th jan</time>
+					</span>
+					<p>
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+						industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+						and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+						leap into
+					</p>
+				</div>
+		</template>
+		<template id = "user-message">
+
 			<div class="message user-message">
 				<span>
 					<b>Username</b>
@@ -48,7 +52,7 @@
 					and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
 					leap into
 				</p>
-			</div>
+			</div>		</template>
 
 		</section>
 		<div class="message-box">

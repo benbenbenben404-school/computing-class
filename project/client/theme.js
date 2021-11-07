@@ -2,7 +2,7 @@
 document.onload = setTheme()
 
 function setTheme(){
-    if (localStorage.getItem('theme') = "light"){
+    if (localStorage.getItem('theme') == "light"){
         document.documentElement.setAttribute('data-theme', 'light');
     } else {
         localStorage.setItem('theme', 'dark');
