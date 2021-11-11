@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body onload="on_load()">
 	<main class="main-window" id="chat-window">
 		<header class="chat-header">
 			<h2>Chat name</h2>
@@ -106,39 +106,25 @@
 			<h2>Chat name</h2>
 			<button class="small-button" onclick="document.getElementById('create-chat-modal').style.display = 'flex'">Create new</button>
 		</header>
-		<span class="chat-descriptor">
-			<p   
-				onclick="document.getElementById('manage-window').style.display = 'none';document.getElementById('chat-window').style.display = 'flex'">
-				Lorem ipsum</p>
-			<span>12</span>
-
-
-			<svg onclick="document.getElementById('manage-window').style.display = 'flex';document.getElementById('chat-window').style.display = 'none'"
-				width="20" height="40">
-				<circle cx="10" cy="10" r="3" />
-				<circle cx="10" cy="20" r="3" />
-				<circle cx="10" cy="30" r="3" />
-			</svg>
-
-		</span>
-		<span class="chat-descriptor">
-			<p>Family</p>
-			<span style="display: none;">1</span>
-			<svg width="20" height="40">
-				<circle cx="10" cy="10" r="3" />
-				<circle cx="10" cy="20" r="3" />
-				<circle cx="10" cy="30" r="3" />
-			</svg>
-		</span>
-		<span class="chat-descriptor">
-			<p>Lorem ipsum</p>
-			<span>3</span>
-			<svg width="20" height="40">
-				<circle cx="10" cy="10" r="3" />
-				<circle cx="10" cy="20" r="3" />
-				<circle cx="10" cy="30" r="3" />
-			</svg>
-		</span>
+		<div id="chat-descriptor-container">
+		<template id="chat-descriptor">
+			<div class="chat-descriptor">
+				<p   
+					onclick="">
+				</p>
+				<span>0</span>
+	
+	
+				<svg onclick=""
+					width="20" height="40">
+					<circle cx="10" cy="10" r="3" />
+					<circle cx="10" cy="20" r="3" />
+					<circle cx="10" cy="30" r="3" />
+				</svg>
+	
+			</div>
+		</template>
+</div>
 		<section class="side-bottom">
 			<button class="small-button" onclick="toggleTheme()">Toggle Theme</button>
 			<button class="small-button" >Log out</button>

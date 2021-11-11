@@ -15,10 +15,60 @@
             <h1>
                 Log in
             </h1>
-            <form action = "main.html" class="auth-form">
-                <input type = "text" placeholder="Username...">
-                <input type = "text" placeholder="Password...">
+            <form action = "login.php" method="POST" class="auth-form">
+                <input type = "text" name="username" placeholder="Username...">
+                <input type = "text" name="password" placeholder="Password...">
+ <p class="validation-space">
+                    <?php
+                        session_start();
+                        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    
+                            $username = $_POST['username'];
+                            $password = $_POST['password'];
 
+                            $valid = True;
+                            $error = "";
+                            if (mb_strlen($username) >30){
+                            	$valid = False;
+                            	$error = "Username too long";
+                            }	
+                            if (mb_strlen($password) >30){
+                            	$valid = False;
+                            	$error = "password too long";
+                            }	
+                            if (mb_strlen($password) <8){
+                            	$valid = False;
+                            	$error = "password too short";
+                            }	
+                            if (mb_strlen($username) >30){
+                            	$valid = False;
+                            	$error = "Username too long";
+                            }	
+                            if ($error){
+                            	echo $error;
+                            }
+                            
+                            
+                            if ($valid){
+                            	$servername = "127.0.0.1:50447";
+                            	$serverusername = "azure";
+                            	$serverpassword = "6#vWHD_$";
+                            	$dbname = "chat";
+                            	$conn = new mysqli($servername, $serverusername, $serverpassword, $dbname);
+                                $conn->set_charset('utf8mb4');
+                
+                                $sql = "SELECT username, password_hash FROM user WHERE username='$username'";
+                                $result = $conn->query($sql); 
+                                if (password_verify($password, $result->fetch_assoc()["password_hash"])){
+                                	$_SESSION["username"] = $username;
+                                    header('Location: main.html');
+                                } else {
+                                     echo "username or password wrong";
+                                }   
+                            }
+                        }
+                    ?>
+                </p>
                 <input type ="submit" class="main-button" value="Log in">
                 
             </form>

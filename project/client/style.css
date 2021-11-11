@@ -158,6 +158,12 @@ align-self: center;
   max-width: 800px;
   align-content: center;
 }
+.validation-space {
+width:100%;
+color:var(--red-col);
+text-align:center;
+font-size:0.8em;
+}
 /*Styling for the login and signup forms*/
 
 .auth-form {
