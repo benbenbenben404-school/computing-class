@@ -3,9 +3,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link  rel="stylesheet" href="style.css">
-                <script src="theme.js"></script>
+
   <meta charset="UTF-8">
 
     </head>
@@ -17,14 +18,14 @@
             </h1>
             <form action = "login.php" method="POST" class="auth-form">
                 <input type = "text" name="username" placeholder="Username...">
-                <input type = "text" name="password" placeholder="Password...">
+                <input type = "password" name="password" placeholder="Password...">
  <p class="validation-space">
                     <?php
                         session_start();
                         if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     
-                            $username = $_POST['username'];
-                            $password = $_POST['password'];
+                            $username =filter_input(INPUT_POST,'username', FILTER_SANITIZE_SPECIAL_CHARS) ;
+                            $password = filter_input(INPUT_POST,'password', FILTER_SANITIZE_SPECIAL_CHARS);
 
                             $valid = True;
                             $error = "";

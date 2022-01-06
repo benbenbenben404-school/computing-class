@@ -1,216 +1,190 @@
 <html>
+	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="style.css">
 
-<head>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+		<script src="main.js"></script>
+		            <title>Chat</title>
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="style.css">
-	<script src="theme.js"></script>
-	<script src="main.js"></script>
-  <meta charset="UTF-8">
-
-</head>
-
-<body onload="on_load()">
-	<main class="main-window" id="chat-window">
-		<header class="chat-header">
-			<h2>Chat name</h2>
-			<span onclick="console.log('close chat')" class="close">
-				
-							<svg   viewBox="0,0,100,100">
-				    <line x1="15" y1="15" x2="85" y2="85"  />
-				    <line x1="85" y1="15" x2="15" y2="85"  />
-				</svg> 
-			</span>
-		</header>
-		<section class="chat" id="chat">
-			<template id = "message">
-				<div class="message">
-					<span>
-						<b>Username</b>
-						<time> 8th jan</time>
-					</span>
-					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-						industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-						and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-						leap into
-					</p>
-				</div>
-		</template>
-		<template id = "user-message">
-
-			<div class="message user-message">
-				<span>
-					<b>Username</b>
-					<time> 8th jan</time>
+	  <meta charset="UTF-8">
+	</head>
+	<body onload="on_load()">
+		<!--Main chat secction, where messages are viewd-->
+		<main class="main-window" id="chat-window" style="display:none">
+			<header class="chat-header" id="chat-header">
+				<h2>Chat name</h2>
+				<span onclick="close_panel()" class="close">
+					<svg viewBox="0,0,100,100">
+					    <line x1="15" y1="15" x2="85" y2="85"  />
+					    <line x1="85" y1="15" x2="15" y2="85"  />
+					</svg> 
 				</span>
-				<p>
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-					industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-					and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-					leap into
-				</p>
-			</div>		</template>
-
-		</section>
-		<div class="message-box">
-			<input type="text" placeholder="Type message...">
-			<button style="border:none;">
-				<svg   viewBox="0,0,100,80">
-				  <polygon points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 "  />
-				</svg> 
-            </button>
-		</div>
-	</main>
-	<main class="main-window" id="manage-window">
-		<header class="chat-header">
-			<h2>Chat name</h2>
-
-			<span onclick="console.log('close chat')" class="close">
-				
-							<svg   viewBox="0,0,100,100">
-				    <line x1="15" y1="15" x2="85" y2="85"  />
-				    <line x1="85" y1="15" x2="15" y2="85"  />
-				</svg> 
-			</span>
-		</header>
-		<button class="main-button" style="display: none;">
-			Delete chat
-		</button>
-		<button class="main-button">
-			Leave chat
-		</button>
-		<section class="display-box">
-			<div class="members">
-				<span>
-					<b>Username</b>
-					<button class="small-indicator">Owner</button>
-				</span>
-
-				<span>
-					<b>Username</b>
-					<button class="small-button">Remove</button>
-				</span>
-
+			</header>
+			<section class="chat" id="chat">
+				<!-- Messages go here -->
+			</section>
+			<div class="message-box">
+				<input type="text" placeholder="Type message..." id="message-input" onEnter="console.log('enter')">
+				<button style="border:none;" onclick = "send_message()">
+					<svg viewBox="0,0,100,80">
+					  <polygon points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 "  />
+					</svg> 
+	            </button>
 			</div>
-
-			<button class="main-button" onclick="document.getElementById('add-people-modal').style.display = 'flex';">
-				Add people
+		</main>
+		<!--Window to manage a chat-->
+		<main class="main-window" id="manage-window">
+			<header class="chat-header">
+				<h2>Chat name</h2>
+				<span onclick="close_panel()" class="close">
+					<svg viewBox="0,0,100,100">
+					    <line x1="15" y1="15" x2="85" y2="85"  />
+					    <line x1="85" y1="15" x2="15" y2="85"  />
+					</svg> 
+				</span>
+			</header>
+			<button class="main-button" id="delete-chat-button">
+				Delete chat
 			</button>
-		</section>
-	</main>
-	<aside class="side-window">
-		<header class="side-header">
-			<h2>Chat name</h2>
-			<button class="small-button" onclick="document.getElementById('create-chat-modal').style.display = 'flex'">Create new</button>
-		</header>
-		<div id="chat-descriptor-container">
-		<template id="chat-descriptor">
-			<div class="chat-descriptor">
-				<p   
-					onclick="">
-				</p>
-				<span>0</span>
+			<button class="main-button" id="leave-chat-button">
+				Leave chat
+			</button>
+			<section class="display-box">
+				<div class="members" id="username-box">
+					
+				</div>
+				<button class="main-button" id="add-people-button" onclick="open_modal('add-people-modal');live_search('#add-people-modal input[type=text]', search_for_user_to_add)">
+					Add people
+				</button>
+			</section>
+		</main>
+		
+		<!--Side Window-->
+		<aside class="side-window">
+			<header class="side-header">
+				<h2>Chats</h2>
+				<button class="small-button" onclick="open_modal('create-chat-modal');live_search('#create-chat-modal #search',search_for_user_to_create)">Create new</button>
+			</header>
+			<div id="chat-descriptor-container">
+				<!--chat descriptors go here-->
+			</div>
+			<section class="side-bottom">
+				<button class="small-button" onclick="toggle_theme()">Toggle Theme</button>
+				<a class="small-button" href = "logout.php">Log out</a>
+			</section>
+		</aside>
+		
+		
+	    <main class="modal-bg" id= "add-people-modal">
+			<div class="modal">
+				<header class="modal-header">
+	                <h2>Add People</h2>
+	                <span onclick="close_modal('add-people-modal')" class="close">
+	
+	                    <svg   viewBox="0,0,100,100">
+	                        <line x1="15" y1="15" x2="85" y2="85"  />
+	                        <line x1="85" y1="15" x2="15" y2="85"  />
+	                    </svg> 
+	                </span>
 	
 	
-				<svg onclick=""
-					width="20" height="40">
-					<circle cx="10" cy="10" r="3" />
-					<circle cx="10" cy="20" r="3" />
-					<circle cx="10" cy="30" r="3" />
-				</svg>
+				</header>
+				<input type="text" placeholder="Search for users..." oninput="live_search('#add-people-modal input[type=text]',search_for_user_to_add)">
+				<section class="display-box">
+					<div class="members" >
+
+					</div>
+	
+					<button class="main-button">
+					</button>
+				</section>
 	
 			</div>
-		</template>
-</div>
-		<section class="side-bottom">
-			<button class="small-button" onclick="toggleTheme()">Toggle Theme</button>
-			<button class="small-button" >Log out</button>
-
-		</section>
-
-	</aside>
-    <main class="modal-bg" id= "add-people-modal">
-		<div class="modal">
-			<header class="modal-header">
-                <h2>Add People</h2>
-                <span onclick="document.getElementById('add-people-modal').style.display='none'" class="close">
-
-                    <svg   viewBox="0,0,100,100">
-                        <line x1="15" y1="15" x2="85" y2="85"  />
-                        <line x1="85" y1="15" x2="15" y2="85"  />
-                    </svg> 
-                </span>
-
-
-			</header>
-			<input type="text" placeholder="Search for users...">
-			<section class="display-box">
-				<div class="members">
-                    <span>
-                        <b>Username</b>
-                        <button class="small-button">Add</button>
-                    </span>
-
-                    <span>
-                        <b>Username</b>
-                        <button class="small-indicator">Added</button>
-                    </span>
-                     <span>
-                        <b>Username</b>
-                        <button class="small-button">Add</button>
-                    </span>
-
-
-				</div>
-
-				<button class="main-button">
-				</button>
-			</section>
-
-		</div>
-	</main>
-	<main class="modal-bg" id= "create-chat-modal">
-		<div class="modal">
-			<header class="modal-header">
-				<h2>Create new chat</h2>
-                <span onclick="document.getElementById('create-chat-modal').style.display='none'" class="close">
-
-                                <svg   viewBox="0,0,100,100">
-                        <line x1="15" y1="15" x2="85" y2="85"  />
-                        <line x1="85" y1="15" x2="15" y2="85"  />
-                    </svg> 
-                </span>
-
-
-			</header>
-			<input type="text" placeholder="Chat name...">
-			<input type="text" placeholder="Search for users...">
-			<section class="display-box">
-				<div class="members">
-	                   <span>
-                        <b>Username</b>
-                        <button class="small-button">Add</button>
-                    </span>
-
-                    <span>
-                        <b>Username</b>
-                        <button class="small-indicator">Added</button>
-                    </span>
-                    
-
-				</div>
-
-			</section>
-
-				<button class="main-button">
-                    Create
-				</button>
-		</div>
-	</main>
-
-</body>
-
+		</main>
+		<main class="modal-bg" id= "create-chat-modal">
+			<div class="modal">
+				<header class="modal-header">
+					<h2>Create new chat</h2>
+	                <span onclick="close_modal('create-chat-modal')" class="close">
+	
+	                                <svg   viewBox="0,0,100,100">
+	                        <line x1="15" y1="15" x2="85" y2="85"  />
+	                        <line x1="85" y1="15" x2="15" y2="85"  />
+	                    </svg> 
+	                </span>
+	
+	
+				</header>
+				<input type="text" placeholder="Chat name..." id="name" >
+				<input type="text" placeholder="Search for users..." id="search" oninput="live_search('#create-chat-modal #search',search_for_user_to_create)">
+				<section class="display-box">
+					<div class="members">
+		                   
+					</div>
+				</section>
+					<button class="main-button" onclick="create_chat()">
+	                    Create
+					</button>
+			</div>
+		</main>
+	</body>
 </html>
+
+
+<template id = "message">
+	<div class="message">
+		<span>
+			<b><!-- Username --></b>
+			<time><!-- time sent --></time>
+		</span>
+		<p><!-- Message Content --></p>
+	</div>
+</template>
+<template id = "user-message">
+	<div class="message user-message">
+		<span>
+			<b><!-- Username --></b>
+			<time><!-- time sent --></time>
+		</span>
+		<p><!-- Message Content --></p>
+	</div>
+</template>
+<template id="chat-descriptor">
+	<div class="chat-descriptor" >
+		<p><!-- Chat Name --></p>
+		<span><!-- Num of notifications -->0</span>
+		<svg width="20" height="40">
+			<circle cx="10" cy="10" r="3" />
+			<circle cx="10" cy="20" r="3" />
+			<circle cx="10" cy="30" r="3" />
+		</svg>
+	</div>
+</template>
+
+
+<!--Template for username display-->
+<template id="username-display">
+	<span>
+		<b>Username</b>
+		<button class="small-indicator" style="display:none">Owner</button>
+		<button class="small-button" style="display:none">Remove</button>
+	</span>
+</template>
+
+<!--Template for button to add user-->
+<template id="username-add-button">
+	<span>
+	    <b>Username</b>
+	    <button class="small-button">Add</button>
+	</span>
+</template>
+<!--Template for button to show user has been added-->
+<template id="username-added-button">
+	<span>
+	    <b>Username</b>
+	    <button class="small-indicator">Added</button>
+	</span>
+</template>

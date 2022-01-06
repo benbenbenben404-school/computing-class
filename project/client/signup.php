@@ -5,8 +5,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
 
         <link  rel="stylesheet" href="style.css">
-        <script src="theme.js"></script>
+
       <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     </head>
     <body>
@@ -17,14 +18,14 @@
             </h1>
             <form action = "signup.php" method="post" class="auth-form">
                 <input type = "text" name="username" placeholder="Username...">
-                <input type = "text" name="password" placeholder="Password...">
+                <input type = "password" name="password" placeholder="Password...">
                 <p class="validation-space">
                     <?php
                         session_start();
                         if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 
-                            $username = $_POST['username'];
-                            $password = $_POST['password'];
+                            $username =filter_input(INPUT_POST,'username', FILTER_SANITIZE_SPECIAL_CHARS) ;
+                            $password = filter_input(INPUT_POST,'password', FILTER_SANITIZE_SPECIAL_CHARS);
                             $valid = True;
                             $error = "";
                             if (mb_strlen($username) >30){

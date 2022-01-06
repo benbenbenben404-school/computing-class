@@ -1,8 +1,3 @@
-/*Temporary, just for testing purposes*/
-
-#manage-window {
-  display: none;
-}
 
 /*CSS variables used to provide the two themes*/
 /*The variables in :root are the defualt, dark mode, variables, and the ones in [data-theme="light"] are for light mode, and must be enabled via JS*/
@@ -36,7 +31,8 @@
   padding: 0;
   scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
   scrollbar-width: thin;
-  color: var(--text-col)
+  color: var(--text-col);
+  overflow-wrap: break-word;
 }
 
 
@@ -77,7 +73,7 @@ input {
 }
 
 /*Styling for text inputs*/
-input[type=text] {
+input[type=text], input[type=password] {
 
   background-color: var(--highlight-bg);
   padding: 10px 10px 10px 20px;
@@ -227,7 +223,7 @@ font-size:0.8em;
   }
 
   .side-window {
-    display: none !important;
+
   }
 
   .chat-header>span {
@@ -273,17 +269,21 @@ font-size:0.8em;
 
 .main-window,.side-window {
   padding: 0em 1em 1em 1em;
-
+display: flex;
   width: 70%;
-  display: flex;
+
   flex-direction: column;
   height: 100%;
 
 }
 
-.main-window {width: 70%;}
-.side-window {width: 30%;}
+.main-window {width: 70%; display:none;}
+.side-window {width: 30%;margin-left:auto;}
 
+#chat-descriptor-container{
+  overflow-y:scroll;
+
+}
 
 .chat-descriptor {
   display: flex;
@@ -295,7 +295,7 @@ font-size:0.8em;
 .chat-descriptor>p {
   display: inline;
   margin-right: auto;
-
+  overflow:hidden;
 }
 
 
@@ -307,6 +307,7 @@ font-size:0.8em;
   text-align: center;
   background-color: var(--red-col);
   font-weight: 900;
+  display:none;
 }
 
 

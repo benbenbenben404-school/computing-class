@@ -30,6 +30,6 @@ echo "<br>";
 //echo $_GET["id"].$_GET["fname"].$_GET["lname"].$_GET["addr"].$_GET["city"];
 $result = mysqli_query($conn, $sql );
 echo $result;
-
+echo "hello sammy";
 mysqli_close($conn);
 ?>
