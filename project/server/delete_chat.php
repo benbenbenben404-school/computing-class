@@ -7,7 +7,7 @@ session_start();
 $username= $_SESSION["username"];
 
 
-//Get the id of the chat being deleted, from request
+//Get the id of the chat being deleted, from request, making sure to sanitise them in order to prevent code ingection
 $chat_id = filter_input(INPUT_POST,'chat_id', FILTER_SANITIZE_SPECIAL_CHARS);
 //Set the arguments for the connection to the database
 $servername = "127.0.0.1:50447";
@@ -23,9 +23,8 @@ $conn->set_charset('utf8mb4');
 $sql = "SELECT owner FROM chat WHERE owner='$username' AND chat_id='$chat_id'";
 $result = $conn->query($sql); 
 
-$result = $conn->query($sql); 
 if ($result){
-	//delete chat
+	//delete chat through SQL
 	$sql = "DELETE FROM chat WHERE chat_id='$chat_id'";
 	$result = $conn->query($sql); 
 

@@ -7,7 +7,7 @@ header('Content-Type: text/xml');
 date_default_timezone_set('UTC');
 //Set the time from the request arguments, and the username from session variables
 $time = filter_input(INPUT_POST,'time', FILTER_SANITIZE_SPECIAL_CHARS);
-//check if the session variable is et before getting username. If its not, set the response code to 403, wich is incorrect auth, and kill the connection
+//check if the session variable is set before getting username. If its not, set the response code to 403, wich is incorrect auth, and kill the connection
 if($_SESSION["username"]){
 	$username =$_SESSION["username"];
 } else{
@@ -25,9 +25,10 @@ $serverusername = "azure";
 $serverpassword = "6#vWHD_$";
 $dbname = "chat";
 
-//initialise the connection to the dataabse, and set it to utf8mb4 mode, which allows it to deal with chemistry
+//initialise the connection to the database, and set it to utf8mb4 mode, which allows it to deal with unicode
 $conn = new mysqli($servername, $serverusername, $serverpassword, $dbname);
 $conn->set_charset('utf8mb4');
+
 //Execute the sql query to get all the chats that the user is in, and get all the chats since a certain time
 $sql = "SELECT chat_id FROM chat_participation WHERE username='$username' AND '$time' <(SELECT last_modified FROM chat WHERE chat_participation.chat_id=chat_id )";
 $result = $conn->query($sql); 
