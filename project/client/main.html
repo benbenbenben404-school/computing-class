@@ -26,14 +26,15 @@
 			<section class="chat" id="chat">
 				<!-- Messages go here -->
 			</section>
-			<div class="message-box">
-				<input type="text" placeholder="Type message..." id="message-input" onEnter="console.log('enter')">
-				<button style="border:none;" onclick = "send_message()">
+			<!--THis is only a form to allow it to be styled when the input is invalid-->
+			<form class="message-box">
+				<input type="text" placeholder="Type message..." id="message-input"  maxlength="1000">
+				<button style="border:none;" onclick = "send_message();return false;">
 					<svg viewBox="0,0,100,80">
 					  <polygon points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 "  />
 					</svg> 
 	            </button>
-			</div>
+			</form>
 		</main>
 		<!--Window to manage a chat-->
 		<main class="main-window" id="manage-window">
@@ -118,16 +119,17 @@
 	
 	
 				</header>
-				<input type="text" placeholder="Chat name..." id="name" >
+				<input type="text" placeholder="Chat name..." id="name" maxlength=30>
 				<input type="text" placeholder="Search for users..." id="search" oninput="live_search('#create-chat-modal #search',search_for_user_to_create)">
 				<section class="display-box">
 					<div class="members">
 		                   
 					</div>
 				</section>
-					<button class="main-button" onclick="create_chat()">
-	                    Create
-					</button>
+                 <p class="validation-space" id="create_chat_validation"></p>
+				<button class="main-button" onclick="create_chat()">
+                    Create
+				</button>
 			</div>
 		</main>
 	</body>

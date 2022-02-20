@@ -140,6 +140,13 @@ function load_data(time){
 			   current_user=data.getElementsByTagName("username")[0].childNodes[0].nodeValue
 		   }
 		   
+		   		   console.log("")
+		   console.log(data.getElementsByTagName("time_returned")[0].childNodes[0].nodeValue)
+		   console.log(last_data_time)
+		   console.log("")
+		   if (data.getElementsByTagName("time_returned")[0].childNodes[0].nodeValue<=last_data_time){
+			   //return
+		   }
 		   //Get all chats from data, and iterate through them as chat
 		   chats =data.getElementsByTagName("chat")
 		   for ( i=0; i< chats.length; i++){
@@ -212,6 +219,11 @@ function load_data(time){
 			window.location.href = "index.html";
 
 		} 
+		if (this.readyState == 4){
+			setTimeout(function(){  load_data(last_data_time) }, 1500);
+
+
+		}
 	};
 	
 	
@@ -398,7 +410,9 @@ function show_chat(chat_id){
 	
 	//Switch to the chat-window panel, and keep a reference to the panel in panel
 	var panel = switch_panel("#chat-window")
-
+	
+	//Clear the validation on the message input, in case the user previously tried to send a blank message
+	document.getElementById("message-input").setCustomValidity("")
 	//Get the chat_name, adall the messgaes in the chat, from global_data
 	var chat_name = global_data["chats"][chat_id]["chat-name"]	
 	var messages = global_data["chats"][chat_id]["messages"]
@@ -484,6 +498,8 @@ function get_50_more(){
 
 //Function to send a message to the currenlty open chat.
 function send_message(){
+	//Clear the validation on the message input, in case the user previously tried to send a blank message
+	document.getElementById("message-input").setCustomValidity("")
 	//Get the contents of the message-input box
 	var content = document.getElementById("message-input").value
 	//If the box is not empty, send the messgae
@@ -494,9 +510,12 @@ function send_message(){
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		//Send the requestm, with content as the contentes of the message, and current_chat, the chat being sent to as the chat_if
 		xhttp.send(encodeURI("content="+content+"&chat_id="+current_chat));
-
+		//Clear the message_box
+		document.getElementById("message-input").value=""
 	
 
+	} else {
+		document.getElementById("message-input").setCustomValidity("Must not be blank")
 	}
 	
 	//Clear the message_box
@@ -509,35 +528,66 @@ function on_load(){
 	//Loads the theme from local storage, if its been set
 	load_theme()
 	//Initially get all mesages and chat, by loading data since a very early time
-	load_data('1970-01-01 10:00:00')
+	load_data('1970-01-01 10:00:00.123456')
 	//Inititally set current_panel to bethe side window, which is nescesacry for mobile platforms
 	current_panel= document.querySelector(".side-window")
 	//Set the load data funtion to run in the background every 2 seconds, with the last time data was recieved as the argument to get data from
-	setInterval(function() {
-		load_data(last_data_time)
-	}, 2000)
-	//Set up an event listener to send a message when th enter key is pressed
+	// setInterval(function() {
+	// 	console.log(last_data_time)
+	// 	load_data(last_data_time)
+	// }, 2000)
+	//Set up an event listener to send a message when th enter key is pressed, and also to check if the message box is valid, after it was balnk
 	document.querySelector("#message-input").addEventListener("keyup", function(event) {
 	  // Number 13 is the "Enter" key on the keyboard
 	  if (event.keyCode === 13) {
 	    // Cancel the default action, if needed
 	    event.preventDefault();
-	    // Trigger the button element with a click
-	send_message()
+	    //Send the message
+		send_message()
+	  }
+	  //If the message box is not balnk, set it as valid
+	  if (document.getElementById("message-input").value !=""){
+	  	document.getElementById("message-input").setCustomValidity("")
 	  }
 	});
 
 }
 
-
-function open_modal(modal){
-	var modal = document.getElementById(modal)	
+//Function that gets a modal by id, and shows it
+function open_modal(modal_name){
+	
+	if (modal == "create-chat-modal"){
+		document.querySelector('#create_chat_validation').style.display="none"
+		document.querySelector('#create-chat-modal #name').setCustomValidity("")
+	}
+	var modal = document.getElementById(modal_name)	
 	modal.style.display="flex"
+	//Add an event listener so that if the user clicks outside the modal, it closes it
+	document.addEventListener("keydown", function(event){
+		//Check that the area being clicked is not the modal itself, but the background arounmd it
+		console.log(event.key)
+		  if (event.key == "Escape") {
+		  
+		
+			close_modal(modal_name)	
+		  }
+		}, false);
+		modal.addEventListener("click", function(event){
+
+		  if (event.currentTarget !== event.target) {
+		    return;
+		  }
+		
+		close_modal(modal_name)	
+		}, false);
 }
+//Function that gets a modal by id, and hides it
 function close_modal(modal){
 	var modal = document.getElementById(modal)	
 	modal.style.display="none"
 }
+
+//Function that hides the main panel
 function clear_main_panel(){
 	current_panel.style.display="none"
 }
@@ -551,6 +601,7 @@ function remove_from_chat(chat_id, user_id){
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(encodeURI("user_id="+user_id+"&chat_id="+chat_id));
 }
+
 //Fucntion to make the request to delete a chat
 //arguments are the chat to delete
 function delete_chat(chat_id){
@@ -560,7 +611,8 @@ function delete_chat(chat_id){
 	xhttp.send(encodeURI("chat_id="+chat_id));
 }
 
-
+//Fucntion to make the request to add a user to a chat
+//arguments are the username to add, and the chat to add them to
 function add_to_chat(chat_id, user_id){
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST", "../server/add_user.php", true);
@@ -568,111 +620,57 @@ function add_to_chat(chat_id, user_id){
 	xhttp.send(encodeURI("user_id="+user_id+"&chat_id="+chat_id));
 }
 
+//Function to create a chat from the modal box
 function create_chat(){
-	close_modal('create-chat-modal')
-	var xhttp = new XMLHttpRequest();
-	usernames_to_add.push(current_user)
+	//Get the name of the chat to be created
 	var chat_name = document.querySelector('#create-chat-modal #name').value;
+	//If the chat nam is not set, indicate this to the user, and stop proccesong
+	if (!chat_name){
+		document.querySelector('#create_chat_validation').innerHTML = "Chat name must not be blank"
+		document.querySelector('#create_chat_validation').style.display="block"
+		document.querySelector('#create-chat-modal #name').setCustomValidity(" ")
+		return
+	}
+	//Close the create chat modal
+	close_modal('create-chat-modal')
+	//Add the current user to the usernames to be added to the chat
+	usernames_to_add.push(current_user)
+
+	//Prepare the web equest to create a chat, setting the url, and content type
+	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST", "../server/create_chat.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	//when the request is succesful, add all of the usrnames to be added to the chat.
 	xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) {
+			//Get the chat id of the newly created chat, in order to be able to add users to it
 			var chat_id = xhttp.responseText
+			
+			//For each uers in usernames to add, add them to the newly created chat
 			for (var user in usernames_to_add){
 				add_to_chat(chat_id, usernames_to_add[user])
 			}
+			//Clear the usernmaes to add
 			usernames_to_add=[]
 		}
 	}
+	
+	//Send the request to create the chat, with chat_name as the chat_name
 	xhttp.send(encodeURI("chat_name="+chat_name));
 }
 
-
-function search_for_user_to_add(usernames_searched){
-var results=document.querySelector("#add-people-modal .members")
-	results.innerHTML = ""
-	for( let i =0; i< usernames_searched.length;i++){
-		let user = usernames_searched[i].childNodes[0].nodeValue
-
-		if (global_data["chats"][current_chat]["users"].includes(user)){
-			
-
-			var resultTemplate = document.getElementById("username-added-button")
-			var result = resultTemplate.content.cloneNode(true);
-		
-	
-			result.querySelectorAll("b")[0].innerHTML = user
-	
-			results.appendChild(result);
-		}else{
-			
-
-			var resultTemplate = document.getElementById("username-add-button")
-			let result = resultTemplate.content.cloneNode(true);
-		
-	
-			result.querySelectorAll("b")[0].innerHTML = user
-			result.querySelectorAll("button")[0].addEventListener("click", function(){
-				add_to_chat(current_chat,user);
-				this.className = 'small-indicator';
-				this.innerHTML = 'Added';
-
-			}, false);
-			results.appendChild(result);
-		}
-
-	}
-
-}
-function search_for_user_to_create(usernames_searched){
-		var results=document.querySelector("#create-chat-modal .members")
-	results.innerHTML = ""
-	for( let i =0; i< usernames_searched.length;i++){
-		let user = usernames_searched[i].childNodes[0].nodeValue
-
-		if (usernames_to_add.includes(user)){
-			
-
-			var resultTemplate = document.getElementById("username-added-button")
-			var result = resultTemplate.content.cloneNode(true);
-		
-	
-			result.querySelectorAll("b")[0].innerHTML = user
-				result.querySelectorAll("button")[0].addEventListener("click", function(){
-				usernames_to_add.splice(usernames_to_add.indexOf(user),1);
-				this.className = 'small-button';
-				this.innerHTML = 'Add';
-				search_for_user_to_create(usernames_searched) 
-								console.log(usernames_to_add)
-			}, false);
-			results.appendChild(result);
-		}else{
-			
-
-			var resultTemplate = document.getElementById("username-add-button")
-			let result = resultTemplate.content.cloneNode(true);
-		
-	
-			result.querySelectorAll("b")[0].innerHTML = user
-			result.querySelectorAll("button")[0].addEventListener("click", function(){
-				usernames_to_add.push(user);
-				this.className = 'small-indicator';
-				this.innerHTML = 'Added';
-				search_for_user_to_create(usernames_searched);
-				console.log(usernames_to_add)
-			}, false);
-			results.appendChild(result);
-		}
-
-	}
-
-
-}
-function live_search(search_field, callback){
+//This function is called to search for users from a modal. It is trigeered by both th add users and creat chat modal.
+//As arguments it takes the input box to use to search with, and a callback function.
+//This callback function is what contains the spcific logic of what to do once the results are gotten
+function live_search(search_field, callback){	
+	//Get the term to search for from the input box passed into the function
 	var search_term=document.querySelector(search_field).value	
+	//Prepare the web request, setting the url, and content type
 	var xhttp = new XMLHttpRequest();
 	xhttp.open("POST", "../server/live_search.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	//When the request is succesful, call the callback function with a list of all the usernames returned
 	xhttp.onreadystatechange =   function() {
 	    if (this.readyState == 4 && this.status == 200) {
 			var usernames_returned = xhttp.responseXML.getElementsByTagName("username")
@@ -681,17 +679,122 @@ function live_search(search_field, callback){
 
 		}
 	}
-	
+	//Send the request, with the search t	er, as argumetns
 	xhttp.send(encodeURI("username="+search_term));
-	return xhttp.onreadystatechange
+	
 }
 
+//Function to generate the ui when the user searhces for a user to add to a chat
+//This should only be called as a callback from live_search, with usernames_searched being a list of all the usernames found
+function search_for_user_to_add(usernames_searched){
+	//Get the reuslts box, where the results will be displayed
+	var results=document.querySelector("#add-people-modal .members")
+	//clear the reuslts box
+	results.innerHTML = ""
+	//Iterate through all of the usrenames gotten from the search, and add thm to the box
+	for( let i =0; i< usernames_searched.length;i++){
+		let user = usernames_searched[i].childNodes[0].nodeValue
+		
+		//If the current user is already in the chat, there should be an indicator showig this
+		if (global_data["chats"][current_chat]["users"].includes(user)){
+			
+			//Get the template for display of a user thathas already been added to a chat, and clone it
+			var resultTemplate = document.getElementById("username-added-button")
+			var result = resultTemplate.content.cloneNode(true);
+		
+			//change the username in the template to that of the user
+			result.querySelectorAll("b")[0].innerHTML = user	
+			//add the newly built display to the reuslts box
+			results.appendChild(result);
+		}else{
+			//If the user is not in the chat
 
+			//Get the template for display of a user that is not already in  a chat, and clone it
+			var resultTemplate = document.getElementById("username-add-button")
+			let result = resultTemplate.content.cloneNode(true);
+		
+			//change the username in the template to that of the user
+			result.querySelectorAll("b")[0].innerHTML = user
+			//Add an event listener to the button in the display to add the user to the chat
+			result.querySelectorAll("button")[0].addEventListener("click", function(){
+				//when pressed, add the user to the chat
+				add_to_chat(current_chat,user);
+				//change the button to an inidcator that the user has been added
+				this.className = 'small-indicator';
+				this.innerHTML = 'Added';
+
+			}, false);
+			//add the newly built display to the reuslts box
+			results.appendChild(result);
+		}
+
+	}
+
+}
+
+//Function to generate the ui when the user searhces for a user to add to a chat when creating a chat
+//When a user is "added" from this modal, it wont actaully send a request to do this, as the chat hasnt been created.
+//Instead, it adds the users to an array, and all the users in this array are added when the chat is created
+//This should only be called as a callback from live_search, with usernames_searched being a list of all the usernames found
+function search_for_user_to_create(usernames_searched){
+	//Get the reuslts box, where the results will be displayed
+	var results=document.querySelector("#create-chat-modal .members")
+	//clear the reuslts box
+	results.innerHTML = ""
+	//Iterate through all of the usrenames gotten from the search, and add thm to the box
+	for( let i =0; i< usernames_searched.length;i++){
+		let user = usernames_searched[i].childNodes[0].nodeValue
+
+		//If the user is already in the users to add, add a button showing that the user has been added
+		if (usernames_to_add.includes(user)){
+			
+			//Get and clone the template for a button shiwng that a user has been added
+			var resultTemplate = document.getElementById("username-added-button")
+			var result = resultTemplate.content.cloneNode(true);
+		
+			//Set the username in the display
+			result.querySelectorAll("b")[0].innerHTML = user
+			//Add an event listener to the button to remove the user from the users to add to a chat when the button is clicked
+			result.querySelectorAll("button")[0].addEventListener("click", function(){
+				//remove the user from the array
+				usernames_to_add.splice(usernames_to_add.indexOf(user),1);
+				//Regenerate the modal, to reflect that the user has been removed
+				search_for_user_to_create(usernames_searched) 
+			}, false);
+			//Add the display to the display box, now that it has been generated
+			results.appendChild(result);
+		}else{
+		//If the user is not  in the users to add, add a button to add the user
+			//Get and clone the template for a button to add a user
+			var resultTemplate = document.getElementById("username-add-button")
+			let result = resultTemplate.content.cloneNode(true);
+		
+			//Set the username in the display
+			result.querySelectorAll("b")[0].innerHTML = user
+			//Add an event listener to the button to add the user from the users to add to a chat when the button is clicked
+			result.querySelectorAll("button")[0].addEventListener("click", function(){
+				//Add the user to the array of users to add
+				usernames_to_add.push(user);
+				//Regenerate the search modal to reflect that the user has been added
+				search_for_user_to_create(usernames_searched);
+
+			}, false);
+			//Add the display to the display box, now that it has been generated
+			results.appendChild(result);
+		}
+
+	}
+
+
+}
+
+//Function to remove a panel, leaving th screen blank
 function close_panel(){
+	//Hide the panel
+	current_panel.style.display = "none"
+	//Show the side panel, incase this is on mobile and it is hidden
 	var side_panel = document.querySelector(".side-window")
 	side_panel.style.display = "flex"
-	current_panel.style.display = "none"
+	//Set the current panel to be the side panel
 	current_panel = side_panel
 }
-
-

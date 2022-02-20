@@ -1,3 +1,11 @@
+<!--Sending a request to this page adds a user to a chat
+Arguments Are:
+chat_id: of the chat to add to
+user_id: username of user to add
+
+User senign must be logged in
+	-->
+
 <?php
 //Start the session, inorder to allow us to access the session variables
 session_start();
@@ -26,7 +34,7 @@ if ($result){
 	//add the user to the chat, and set the last modified time on the chat
 	$sql = "INSERT INTO chat_participation (chat_id,username) VALUES ('$chat_id','$user_id')";
 	$result = $conn->query($sql); 
-	$sql = "UPDATE chat SET last_modified = CURRENT_TIMESTAMP WHERE chat_id='$chat_id'";
+	$sql = "UPDATE chat SET last_modified = CURRENT_TIMESTAMP(6) WHERE chat_id='$chat_id'";
 	$result = $conn->query($sql); 	
 }
 //close the connnection to the database

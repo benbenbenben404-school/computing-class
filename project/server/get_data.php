@@ -16,7 +16,9 @@ if($_SESSION["username"]){
 }
 //Start the XML data structure that will be returned, and initailly set the time_returned an username in it
 $data = new SimpleXMLElement('<xml/>');
-$data ->addChild("time_returned", date('Y-m-d H:i:s'));
+$now = DateTime::createFromFormat('U.u', microtime(true));
+
+$data ->addChild("time_returned", $now->format("Y-m-d H:i:s.u"));
 $data ->addChild("username", $username);
 
 //Set the arguments for the connection to the server
@@ -30,9 +32,11 @@ $conn = new mysqli($servername, $serverusername, $serverpassword, $dbname);
 $conn->set_charset('utf8mb4');
 
 //Execute the sql query to get all the chats that the user is in, and get all the chats since a certain time
-$sql = "SELECT chat_id FROM chat_participation WHERE username='$username' AND '$time' <(SELECT last_modified FROM chat WHERE chat_participation.chat_id=chat_id )";
+$sql = "SELECT chat_id FROM chat_participation WHERE username='$username' AND '$time' <=(SELECT last_modified FROM chat WHERE chat_participation.chat_id=chat_id )";
 $result = $conn->query($sql); 
-
+// if (!$result){
+// 	die();
+// }
 
 //Iterate over each of the chats, get the data from them, and add it to the data strucure
 while($row = $result->fetch_assoc()) {
@@ -55,10 +59,10 @@ while($row = $result->fetch_assoc()) {
 	}
 	
 	//Set up and excexute query to get all messgaes  in chat, then add to data structure
-	$messages = $chat ->addChild("users");
+	$messages = $chat ->addChild("messages");
 	$sql = "SELECT content, time_sent, username FROM (SELECT content, time_sent, username FROM message WHERE chat_id='$chat_id' AND time_sent >'$time' ORDER BY time_sent DESC LIMIT 50) X ORDER BY time_sent ASC";
 	$message_query = $conn->query($sql); 
-		
+
 	while($message_details = $message_query->fetch_assoc()){
 		  $message = $messages ->addChild("message");
   		  $message ->addChild("content", htmlspecialchars($message_details["content"]));

@@ -1,16 +1,23 @@
+<!--Page to log into the application. This sets a session variable of the user on the server-->
 <html>
     <head>
+        <!--Links to get external fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+           
+        <!--Get external stylesheet and js-->
         <link  rel="stylesheet" href="style.css">
-
-  <meta charset="UTF-8">
-
+		<script src="main.js"></script>
+        
+        <!--Set the title of the page-->
+        <title>Log in</title>
+        
+        <!--Set some metadata, of the character set used, and some things to make breakpoints woork-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
+    <body onload ="load_theme()">
 
         <section class="center-container">
             <h1>
@@ -19,7 +26,7 @@
             <form action = "login.php" method="POST" class="auth-form">
                 <input type = "text" name="username" placeholder="Username...">
                 <input type = "password" name="password" placeholder="Password...">
- <p class="validation-space">
+                 <p class="validation-space">
                     <?php
                         session_start();
                         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -29,6 +36,8 @@
 
                             $valid = True;
                             $error = "";
+                            #Note that all validation is done in code
+                            #I could have done this in the form itself, but this allows for more consistent error messages
                             if (mb_strlen($username) >30){
                             	$valid = False;
                             	$error = "Username too long";
@@ -41,9 +50,9 @@
                             	$valid = False;
                             	$error = "password too short";
                             }	
-                            if (mb_strlen($username) >30){
+                            if (mb_strlen($username) ==0){
                             	$valid = False;
-                            	$error = "Username too long";
+                            	$error = "Username too short";
                             }	
                             if ($error){
                             	echo $error;

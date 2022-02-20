@@ -3,14 +3,14 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
-
+		<script src="main.js"></script>
         <link  rel="stylesheet" href="style.css">
 
       <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     </head>
-    <body>
+    <body onload ="load_theme()">
 
         <section class="center-container">
             <h1>
@@ -28,6 +28,10 @@
                             $password = filter_input(INPUT_POST,'password', FILTER_SANITIZE_SPECIAL_CHARS);
                             $valid = True;
                             $error = "";
+                            $error = "";
+                            #Note that all validation is done in code
+                            #I could have done this in the form itself, but this allows for more consistent error messages
+                            #This also prevents users from creating out of spec accounts by edting the request after the form sends it
                             if (mb_strlen($username) >30){
                             	$valid = False;
                             	$error = "Username too long";
@@ -40,9 +44,9 @@
                             	$valid = False;
                             	$error = "password too short";
                             }	
-                            if (mb_strlen($username) >30){
+                            if (mb_strlen($username) ==0){
                             	$valid = False;
-                            	$error = "Username too long";
+                            	$error = "Username too short";
                             }	
                             if ($error){
                             	echo $error;

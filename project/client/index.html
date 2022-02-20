@@ -1,18 +1,28 @@
+<!--This is the landing page, ie the page that the user initially sees when they open the page
+This is the pafe that allows the user to log in or sign up
+-->
 <html>
     <head>
+        <!--Links to get external fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
-
+           
+        <!--Get external stylesheet and js-->
         <link  rel="stylesheet" href="style.css">
-
+		<script src="main.js"></script>
+        
+        <!--Set the title of the page-->
         <title>Chat</title>
+        
+        <!--Set some metadata, of the character set used, and some things to make breakpoints woork-->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
     </head>
-    <body>
+    <body onload ="load_theme()">
+        <!--Main section, which contains the Name of the application, and buttons to log in-->
         <section class="center-container">
             <h1>
                 BenChat
@@ -20,7 +30,7 @@
             <a href="login.php" class="main-button">
                 Log in
             </a>
-                <a href="signup.php" class="main-button">
+            <a href="signup.php" class="main-button">
                 Sign up
             </a>
         </section>

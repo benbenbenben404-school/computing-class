@@ -28,7 +28,7 @@ if ($result or $username ==$user_id){
 	//remove the user from the chat, and set the last modified time on the chat
 	$sql = "DELETE FROM chat_participation WHERE username='$user_id' AND chat_id='$chat_id'";
 	$result = $conn->query($sql); 
-	$sql = "UPDATE chat SET last_modified = CURRENT_TIMESTAMP WHERE chat_id='$chat_id'";
+	$sql = "UPDATE chat SET last_modified = CURRENT_TIMESTAMP(6) WHERE chat_id='$chat_id'";
 	$result = $conn->query($sql); 	
 } 
 $conn->close();
