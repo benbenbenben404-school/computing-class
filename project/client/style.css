@@ -29,7 +29,8 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   color: var(--text-col);
-  overflow-wrap: break-word;
+  overflow-wrap: break-word !important  ;
+  word-break: break-word;
   margin: 0;
   padding: 0;
 
@@ -131,7 +132,7 @@ h1 {
   border-radius: 50px;
   /*Set it to have min and max dimensioms, and also to use flex*/
   min-height: 500px;
-  min-width: 500px;
+  min-width: 200px;
   max-width: 800px;
   max-height:80%;
   display: flex;
@@ -252,8 +253,34 @@ font-size:0.8em;
   .chat-header>span {
     display: inline-block !important;
   }
+  
+  .modal{padding: 20 30 20 30;}
+  
+  .modal-header>h2 {
+    font-size: 2em;
+  }
+  .modal input[type=text]{
+  font-size: 1.5em;
+}
+/*The button to close the modal should be 2em big*/
+.modal-header >span {
+  font-size: 1.4em;
+
+}
 }
 
+
+/*Second media query which activates on very small screens, such as older/cheaper phone
+Mostly resizing/remiving padding, to make the ui as usable as possible*/
+@media (max-width: 400px) {
+    .modal {padding: 15 10 15 10;}
+    .modal input[type=text]{font-size: 1em;}
+  .main-button{
+    padding:0 10px 0 10px; 
+    font-size: 2em;
+    min-width:200px
+  }
+}
 /*Styling for the header of the chat, and the header of the side
 Sets the bottom border, and some formatting*/
 .chat-header,.side-header {
@@ -350,10 +377,7 @@ display: flex;
   font-size: 0.8em;
   padding: 0 5px 0 5px;
 }
-/*By defualt, set the colour of the username to a generic red colour. This will be overridden when the mesgae is added*/
-.message>span>b {
-  color: hsl(1, 60%, 50%);
-}
+
 /*Set some formatting on the mesage text*/
 .message>span {
   display: flex;
@@ -364,31 +388,43 @@ display: flex;
   justify-content: flex-end;
   text-align: right;
 }
-
+/*If a message is sent by the currently logged in user, align the username and time to the left*/
 .user-message>span {
   justify-content: flex-end;
 }
-
+/*If a message is sent by the currently logged in user, switch the position of the time and username, so that the username is always on the edge*/
 .user-message>span>b {
   order: 2;
-  color: hsl(120, 60%, 50%);
+
 }
 
+/*MESSAGE BOX*/
+/*This is the styling for the box that the user types in to send a message*/
+/*Note that this is composed of an outer div, with an input box and button inside it*/
+
+/*Set the background color, padding, display mode, and  border radius of the outer div*/
 .message-box {
   display: flex;
   padding: 10px 10px 10px 20px !important;
+  /*Note that calc() is used here to setthe roundered edge of the div, so that it is always perfetly circular.
+  This is as the elemetns inside the div have sizes specified in ems, while the padding is in px, so calc() must be used to add these*/
   border-radius: calc(0.5em + 20px) !important;
   background-color: var(--highlight-bg);
 }
 
+/*Styling for the actual input box that the user types in*/
+/*Disables the background color, margin-top, padding, sets flex-grow and the font size*/
 .message-box>input {
   background-color: transparent;
   margin-top: 0px !important;
+  /*This is required for the input box to properly grow to the size of the outer div*/
   flex-grow: 2;
   padding: 0px !important;
   font-size: 1em !important;
 }
 
+/*Sets the styling for the "send" button in the message box.
+This makes it transparent, and sets the size*/
 .message-box>button {
   background-color: transparent;
     height: 100%;

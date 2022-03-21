@@ -5,7 +5,7 @@ session_start();
 //Get the username of the the user adding the new user from session vars
 $username= $_SESSION["username"];
 
-//Get the id of the chat and user being added, from request, making sure to sanitise them in order to prevent code ingection
+//Get the name of the chat from request, making sure to sanitise it in order to prevent code ingection
 $chat_name = filter_input(INPUT_POST,'chat_name', FILTER_SANITIZE_SPECIAL_CHARS);
 //If the chat_name is not specified, stop proccesing the request
 if (mb_strlen($chat_name)==0){

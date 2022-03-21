@@ -49,6 +49,7 @@
                             	$error = "Username too short";
                             }	
                             if ($error){
+                                echo $username;
                             	echo $error;
                             }
                             

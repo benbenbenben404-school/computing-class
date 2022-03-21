@@ -92,7 +92,13 @@ function display_message(content, username, time, start) {
 	
 	//set the username, time and content of the message
 	message.querySelectorAll("b")[0].innerHTML = username
-	message.querySelectorAll("time")[0].innerHTML = time
+	time_format = new Date(time);
+	let options = {  hour:'numeric',minute:'numeric' ,year: 'numeric', month: 'short', day: 'numeric',hourCycle:'h12'};
+	time_format = time_format.toLocaleString('en-GB',options)
+
+	
+	console.log(time_format)
+	message.querySelectorAll("time")[0].innerHTML = time_format
 	message.querySelectorAll("p")[0].innerHTML = content
 	
 	//Set the color of the username
@@ -140,10 +146,6 @@ function load_data(time){
 			   current_user=data.getElementsByTagName("username")[0].childNodes[0].nodeValue
 		   }
 		   
-		   		   console.log("")
-		   console.log(data.getElementsByTagName("time_returned")[0].childNodes[0].nodeValue)
-		   console.log(last_data_time)
-		   console.log("")
 		   if (data.getElementsByTagName("time_returned")[0].childNodes[0].nodeValue<=last_data_time){
 			   //return
 		   }
@@ -694,7 +696,7 @@ function search_for_user_to_add(usernames_searched){
 	//Iterate through all of the usrenames gotten from the search, and add thm to the box
 	for( let i =0; i< usernames_searched.length;i++){
 		let user = usernames_searched[i].childNodes[0].nodeValue
-		
+
 		//If the current user is already in the chat, there should be an indicator showig this
 		if (global_data["chats"][current_chat]["users"].includes(user)){
 			
@@ -744,7 +746,9 @@ function search_for_user_to_create(usernames_searched){
 	//Iterate through all of the usrenames gotten from the search, and add thm to the box
 	for( let i =0; i< usernames_searched.length;i++){
 		let user = usernames_searched[i].childNodes[0].nodeValue
-
+		if (user == current_user){
+			continue
+		}
 		//If the user is already in the users to add, add a button showing that the user has been added
 		if (usernames_to_add.includes(user)){
 			

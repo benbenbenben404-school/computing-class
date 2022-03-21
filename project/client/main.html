@@ -1,19 +1,35 @@
+<!--This is the HTML for the main page, ie the page from which messages are sent and recieved
+It's important to note that most of the html would never be displayed at once, as their are multiple different sections that are
+swapped out in code
+This means that there are a series of different panels in the code, which are hidden by defualt, and toggeld by JS
+There are also a series of templastes at thebottom. These are frgaments of code such as the HTML for a message, 
+which can be duplicated into the actaul code via JS
+	
+-->
+
 <html>
 	<head>
+		<!--Load some fonts from Google fonts
+		Specifically poppins as weight 400 and 900-->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
+		<!--Load the name stylesheet with all the css in it-->
 		<link rel="stylesheet" href="style.css">
-
+		<!--Load the main Javascript file -->
 		<script src="main.js"></script>
-		            <title>Chat</title>
-					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!--Set the page title-->
+        <title>Chat</title>
+		<!--Set the viewport, to allow breakpoints in css to work-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	  <meta charset="UTF-8">
 	</head>
+	<!--Main body, with function called on load, to eg set theme, and initaiy load messages-->
 	<body onload="on_load()">
-		<!--Main chat section, where messages are viewd-->
+		<!--Main chat section, where messages are viewed, hidden by default-->
 		<main class="main-window" id="chat-window" style="display:none">
+			<!--Chat header-->
 			<header class="chat-header" id="chat-header">
 				<h2>Chat name</h2>
 				<span onclick="close_panel()" class="close">
