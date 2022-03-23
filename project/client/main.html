@@ -1,186 +1,194 @@
-<!--This is the HTML for the main page, ie the page from which messages are sent and recieved
+<!--This is the HTML for the main page, ie the page from which messages are sent and received
 It's important to note that most of the html would never be displayed at once, as their are multiple different sections that are
 swapped out in code
-This means that there are a series of different panels in the code, which are hidden by defualt, and toggeld by JS
-There are also a series of templastes at thebottom. These are frgaments of code such as the HTML for a message, 
-which can be duplicated into the actaul code via JS
+This means that there are a series of different panels in the code, which are hidden by default, and toggled by JS
+There are also a series of templates at the bottom. These are fragments of code such as the HTML for a message, 
+which can be duplicated into the actual code via JS
 	
 -->
 
 <html>
-    <head>
-        <!--Load some fonts from Google fonts
-		Specifically poppins as weight 400 and 900-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap"
-            rel="stylesheet"
-        />
-        <!--Load the name stylesheet with all the css in it-->
-        <link rel="stylesheet" href="style.css" />
-        <!--Load the main Javascript file -->
-        <script src="main.js"></script>
-        <!--Set the page title-->
-        <title>Chat</title>
-        <!--Set the viewport, to allow breakpoints in css to work-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <meta charset="UTF-8" />
-    </head>
-    <!--Main body, with function called on load, to eg set theme, and initaiy load messages-->
+<head>
+    <!--Load some fonts from Google fonts
+		Specifically poppins at weight 400 and 900-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet" />
+    <!--Load the main stylesheet with all the css in it-->
+    <link rel="stylesheet" href="style.css" />
+    <!--Load the main Javascript file -->
+    <script src="main.js"></script>
+    <!--Set the page title-->
+    <title>Chat</title>
+    <!--Set the viewport, to allow breakpoints in css to work-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Set the character set to use in the website, to allow unicode, such as emoji, to work -->
+    <meta charset="UTF-8" />
+</head>
+<!--Main body, with function called on load, to eg set theme, and initially load messages-->
 
-    <body onload="on_load()">
-        <!--Main chat section, where messages are viewed, hidden by default-->
-        <main class="main-window" id="chat-window" style="display:none">
-            <!--Chat header-->
-            <header class="chat-header" id="chat-header">
-                <h2>Chat name</h2>
-                <span onclick="close_panel()" class="close">
+<body onload="on_load()">
+    <!--Main chat section, where messages are viewed, hidden by default-->
+    <main class="main-window" id="chat-window" style="display:none">
+        <!--Chat header-->
+        <header class="chat-header" id="chat-header">
+            <h2>Chat name</h2>
+            <!-- Button to close a chat panel -->
+            <span onclick="close_panel()" class="close">
+                <svg viewBox="0,0,100,100">
+                    <line x1="15" y1="15" x2="85" y2="85" />
+                    <line x1="85" y1="15" x2="15" y2="85" />
+                </svg>
+            </span>
+        </header>
+        <!-- Section where messages are put via JS -->
+        <section class="chat" id="chat">
+            <!-- Messages go here -->
+        </section>
+        <!-- Form to send messages -->
+        <!--This is only a form to allow it to be styled when the input is invalid, the actual messages are sent via JS-->
+        <form class="message-box">
+            <!-- Input to type messages in -->
+            <input type="text" placeholder="Type message..." id="message-input" maxlength="1000" />
+            <!-- Button to send a message, with an svg icon -->
+            <button style="border:none;" onclick="send_message();return false;">
+                <svg viewBox="0,0,100,80">
+                    <polygon points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 " />
+                </svg>
+            </button>
+        </form>
+    </main>
+    <!--Window to either manage or view the members in a chat
+        When this window is opened, JS sets it up to be either one
+        Hidden via CSS by default-->
+    <main class="main-window" id="manage-window">
+        <!--Chat header-->
+        <header class="chat-header">
+            <h2>Chat name</h2>
+            <!-- Button to close a chat panel -->
+            <span onclick="close_panel()" class="close">
+                <svg viewBox="0,0,100,100">
+                    <line x1="15" y1="15" x2="85" y2="85" />
+                    <line x1="85" y1="15" x2="15" y2="85" />
+                </svg>
+            </span>
+        </header>
+        <!-- Buttons to either delete or leave a chat, depending on which mode the panel is in -->
+        <button class="main-button" id="delete-chat-button">
+            Delete chat
+        </button>
+        <button class="main-button" id="leave-chat-button">
+            Leave chat
+        </button>
+        <!-- Box where members are displayed -->
+        <section class="display-box">
+            <div class="members" id="username-box"></div>
+            <!-- Button to open the modal to add a user to a chat. 
+            Clicking it opens the modal, and does an initial search for all users to populate it -->
+            <button class="main-button" id="add-people-button"
+                onclick="open_modal('add-people-modal');live_search('#add-people-modal input[type=text]', search_for_user_to_add)">
+                Add people
+            </button>
+        </section>
+    </main>
+
+    <!--Side window, shown by default, on the side of the screen on desktop, fullscreen on mobile-->
+    <aside class="side-window">
+        <header class="side-header">
+            <h2>Chats</h2>
+            <!-- Button to open the modal to create a new chat
+            Clicking it opens the modal, and does an initial search for all users to populate it -->
+            <button class="small-button"
+                onclick="open_modal('create-chat-modal');live_search('#create-chat-modal #search',search_for_user_to_create)">
+                Create new
+            </button>
+        </header>
+        <!-- Container for chat descriptors, ie the names and menus used to open a chat -->
+        <div id="chat-descriptor-container">
+            <!--chat descriptors go here-->
+        </div>
+        <!-- Section at the bottom of the side panel -->
+        <section class="side-bottom">
+            <!-- Button to toggle the theme -->
+            <button class="small-button" onclick="toggle_theme()">
+                Toggle Theme
+            </button>
+            <!-- Button to log out. Is a link to a php page that logs out the user -->
+            <a class="small-button" href="logout.php">Log out</a>
+        </section>
+    </aside>
+    <!--Modal to add a new user to a chat
+    Hidden By default  -->
+    <!-- Outer div is the container which blurs the background, inner div is the actual modal -->
+    <main class="modal-bg" id="add-people-modal">
+        <div class="modal">
+            <!-- Modal Header, with the name of the modal, and the button the close the modal -->
+            <header class="modal-header">
+                <h2>Add People</h2>
+                <span onclick="close_modal('add-people-modal')" class="close">
                     <svg viewBox="0,0,100,100">
                         <line x1="15" y1="15" x2="85" y2="85" />
                         <line x1="85" y1="15" x2="15" y2="85" />
                     </svg>
                 </span>
             </header>
-            <section class="chat" id="chat">
-                <!-- Messages go here -->
-            </section>
-            <!--THis is only a form to allow it to be styled when the input is invalid-->
-            <form class="message-box">
-                <input
-                    type="text"
-                    placeholder="Type message..."
-                    id="message-input"
-                    maxlength="1000"
-                />
-                <button
-                    style="border:none;"
-                    onclick="send_message();return false;"
-                >
-                    <svg viewBox="0,0,100,80">
-                        <polygon
-                            points="0,30 70,30 70,0 100,40 70,80 70,50 0,50 "
-                        />
-                    </svg>
-                </button>
-            </form>
-        </main>
-        <!--Window to manage a chat-->
-        <main class="main-window" id="manage-window">
-            <header class="chat-header">
-                <h2>Chat name</h2>
-                <span onclick="close_panel()" class="close">
-                    <svg viewBox="0,0,100,100">
-                        <line x1="15" y1="15" x2="85" y2="85" />
-                        <line x1="85" y1="15" x2="15" y2="85" />
-                    </svg>
-                </span>
-            </header>
-            <button class="main-button" id="delete-chat-button">
-                Delete chat
-            </button>
-            <button class="main-button" id="leave-chat-button">
-                Leave chat
-            </button>
+            <!-- Input box to type in to search for users
+            When typed in, calls the live search function -->
+            <input type="text" placeholder="Search for users..."
+                oninput="live_search('#add-people-modal input[type=text]',search_for_user_to_add)" />
+            <!-- Section where users to add are displayed-->
             <section class="display-box">
-                <div class="members" id="username-box"></div>
-                <button
-                    class="main-button"
-                    id="add-people-button"
-                    onclick="open_modal('add-people-modal');live_search('#add-people-modal input[type=text]', search_for_user_to_add)"
-                >
-                    Add people
-                </button>
-            </section>
-        </main>
+                <div class="members">
+                    <!-- Members go here -->
+                </div>
 
-        <!--Side Window-->
-        <aside class="side-window">
-            <header class="side-header">
-                <h2>Chats</h2>
-                <button
-                    class="small-button"
-                    onclick="open_modal('create-chat-modal');live_search('#create-chat-modal #search',search_for_user_to_create)"
-                >
-                    Create new
-                </button>
+            </section>
+        </div>
+    </main>
+    <!--Modal to create a new chat
+    Hidden By default  -->
+    <!-- Outer div is the container which blurs the background, inner div is the actual modal -->
+    <main class="modal-bg" id="create-chat-modal">
+        <div class="modal">
+            <!-- Modal Header, with the name of the modal, and the button the close the modal -->
+            <header class="modal-header">
+                <h2>Create new chat</h2>
+                <span onclick="close_modal('create-chat-modal')" class="close">
+                    <svg viewBox="0,0,100,100">
+                        <line x1="15" y1="15" x2="85" y2="85" />
+                        <line x1="85" y1="15" x2="15" y2="85" />
+                    </svg>
+                </span>
             </header>
-            <div id="chat-descriptor-container">
-                <!--chat descriptors go here-->
-            </div>
-            <section class="side-bottom">
-                <button class="small-button" onclick="toggle_theme()">
-                    Toggle Theme
-                </button>
-                <a class="small-button" href="logout.php">Log out</a>
+            <!-- Input box where the name of a chat is typed. Validated to not be blank, and to be less than 30 characters long -->
+            <input type="text" placeholder="Chat name..." id="name" maxlength="30" />
+            <!-- Input box to type in to search for users
+            When typed in, calls the live search function -->
+            <input type="text" placeholder="Search for users..." id="search"
+                oninput="live_search('#create-chat-modal #search',search_for_user_to_create)" />
+            <!-- Section where members are displayed to add add to the nelwy created chat -->
+            <section class="display-box">
+                <div class="members">
+                    <!-- Users go here -->
+                </div>
             </section>
-        </aside>
+            <!-- Paragraph where validation messages, such as the chat name being blank, are displayed -->
+            <p class="validation-space" id="create_chat_validation"></p>
+            <!-- Button to create a chat -->
+            <button class="main-button" onclick="create_chat()">
+                Create
+            </button>
+        </div>
+    </main>
+</body>
 
-        <main class="modal-bg" id="add-people-modal">
-            <div class="modal">
-                <header class="modal-header">
-                    <h2>Add People</h2>
-                    <span
-                        onclick="close_modal('add-people-modal')"
-                        class="close"
-                    >
-                        <svg viewBox="0,0,100,100">
-                            <line x1="15" y1="15" x2="85" y2="85" />
-                            <line x1="85" y1="15" x2="15" y2="85" />
-                        </svg>
-                    </span>
-                </header>
-                <input
-                    type="text"
-                    placeholder="Search for users..."
-                    oninput="live_search('#add-people-modal input[type=text]',search_for_user_to_add)"
-                />
-                <section class="display-box">
-                    <div class="members"></div>
-
-                    <button class="main-button"></button>
-                </section>
-            </div>
-        </main>
-        <main class="modal-bg" id="create-chat-modal">
-            <div class="modal">
-                <header class="modal-header">
-                    <h2>Create new chat</h2>
-                    <span
-                        onclick="close_modal('create-chat-modal')"
-                        class="close"
-                    >
-                        <svg viewBox="0,0,100,100">
-                            <line x1="15" y1="15" x2="85" y2="85" />
-                            <line x1="85" y1="15" x2="15" y2="85" />
-                        </svg>
-                    </span>
-                </header>
-                <input
-                    type="text"
-                    placeholder="Chat name..."
-                    id="name"
-                    maxlength="30"
-                />
-                <input
-                    type="text"
-                    placeholder="Search for users..."
-                    id="search"
-                    oninput="live_search('#create-chat-modal #search',search_for_user_to_create)"
-                />
-                <section class="display-box">
-                    <div class="members"></div>
-                </section>
-                <p class="validation-space" id="create_chat_validation"></p>
-                <button class="main-button" onclick="create_chat()">
-                    Create
-                </button>
-            </div>
-        </main>
-    </body>
 </html>
 
+<!-- START OF TEMPLATES -->
+<!-- These templates are here to be duplicated into the website by JS when the website is live -->
+
+<!-- Template for a message, not sent by the logged in user -->
 <template id="message">
     <div class="message">
         <span>
@@ -196,6 +204,7 @@ which can be duplicated into the actaul code via JS
         </p>
     </div>
 </template>
+<!-- Template for a message, sent by the logged in user, which means it is on the other side of the message box -->
 <template id="user-message">
     <div class="message user-message">
         <span>
@@ -211,12 +220,16 @@ which can be duplicated into the actaul code via JS
         </p>
     </div>
 </template>
+<!-- Template for a chat descriptor, this being the button/display in the side bar, which is clicked on to open/manage/view the members in a chat -->
 <template id="chat-descriptor">
     <div class="chat-descriptor">
         <p>
             <!-- Chat Name -->
         </p>
-        <span> <!-- Num of notifications -->0 </span>
+        <span>
+            <!-- Num of notifications -->0
+        </span>
+        <!-- An event listener is added in JS to this so that when clicked, it opens the manage/view the members in a chat panel -->
         <svg width="20" height="40">
             <circle cx="10" cy="10" r="3" />
             <circle cx="10" cy="20" r="3" />
@@ -225,10 +238,11 @@ which can be duplicated into the actaul code via JS
     </div>
 </template>
 
-<!--Template for username display-->
+<!--Template for username display, this being the line that shows the username in various displays,  -->
 <template id="username-display">
     <span>
         <b>Username</b>
+        <!-- These buttons are hidden by default, and are shown as needed -->
         <button class="small-indicator" style="display:none">Owner</button>
         <button class="small-button" style="display:none">Remove</button>
     </span>
