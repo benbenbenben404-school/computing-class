@@ -1,9 +1,9 @@
 <?php
-//Start the session, inorder to allow us to access the session variables
+//Start the session, in order to allow us to access the session variables
 session_start();
 
 
-//Get the username of the the user removing the new user from session vars
+//Get the username of the the user removing the  user from session vars
 $username= $_SESSION["username"];
 
 
@@ -16,14 +16,14 @@ $serverusername = "azure";
 $serverpassword = "6#vWHD_$";
 $dbname = "chat";
 
-//initialise the connection to the database, and set it to utf8mb4 mode, which allows it to deal with unicode
+//initialize the connection to the database, and set it to utf8mb4 mode, which allows it to deal with unicode
 $conn = new mysqli($servername, $serverusername, $serverpassword, $dbname);
 $conn->set_charset('utf8mb4');
 
-//check that the user sending the request actaully owns the chat
+//check that the user sending the request actually owns the chat
 $sql = "SELECT owner FROM chat WHERE owner='$username' AND chat_id='$chat_id'";
 $result = $conn->query($sql); 
-
+// If the user owns the chat, or is just removing themselves, proceed
 if ($result or $username ==$user_id){
 	//remove the user from the chat, and set the last modified time on the chat
 	$sql = "DELETE FROM chat_participation WHERE username='$user_id' AND chat_id='$chat_id'";
@@ -32,4 +32,3 @@ if ($result or $username ==$user_id){
 	$result = $conn->query($sql); 	
 } 
 $conn->close();
-?>

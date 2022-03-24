@@ -1,39 +1,34 @@
 <!--This is the landing page, ie the page that the user initially sees when they open the page
-This is the pafe that allows the user to log in or sign up
+This is the page that allows the user to log in or sign up
 -->
 <html>
-    <head>
-        <!--Links to get external fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet">
-           
-        <!--Get external stylesheet and js-->
-        <link  rel="stylesheet" href="style.css">
-		<script src="main.js"></script>
-        
-        <!--Set the title of the page-->
-        <title>Chat</title>
-        
-        <!--Set some metadata, of the character set used, and some things to make breakpoints woork-->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<head>
+    <!--Load some fonts from Google fonts
+		Specifically poppins at weight 400 and 900-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap" rel="stylesheet" />
+    <!--Load the main stylesheet with all the css in it-->
+    <link rel="stylesheet" href="style.css" />
+    <!--Load the main Javascript file -->
+    <script src="main.js"></script>
+    <!--Set the page title-->
+    <title>Chat</title>
+    <!--Set the viewport, to allow breakpoints in css to work-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Set the character set to use in the website, to allow unicode, such as emoji, to work -->
+    <meta charset="UTF-8" />
+</head>
+<!--Main body, with function called on load to set theme-->
 
-    </head>
-    <body onload ="load_theme()">
-        <!--Main section, which contains the Name of the application, and buttons to log in-->
-        <section class="center-container">
-            <h1>
-                Chat App
-            </h1>
-            <a href="login.php" class="main-button">
-                Log in
-            </a>
-            <a href="signup.php" class="main-button">
-                Sign up
-            </a>
-        </section>
+<body onload="load_theme()">
+    <!--Main section, which contains the name of the application, and buttons to log in and sign up-->
+    <section class="center-container">
+        <h1>Chat App</h1>
+        <a href="login.php" class="main-button"> Log in </a>
+        <a href="signup.php" class="main-button"> Sign up </a>
+    </section>
+</body>
 
-    </body>
 </html>
