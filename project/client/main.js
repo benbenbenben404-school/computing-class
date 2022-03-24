@@ -37,7 +37,7 @@ function mulberry32(a) {
 
 //Functions Dealling with loading and setting themes
 
-//On page load, this loads the theme from local storage, and sets it
+//1. On page load, this loads the theme from local storage, and sets it
 function load_theme(){
 	//Check if the theme is set in local storage, and if its not set, set it to dark
 	if (!localStorage.getItem('theme')){
@@ -49,7 +49,7 @@ function load_theme(){
 	//Set the theme in  the browser from local storage
     document.documentElement.setAttribute('data-theme', theme);
 }
-//This function toggles the theme
+//2. This function toggles the theme
 function toggle_theme(){
 	//Get the theme as theme from local storage	
 	var theme = localStorage.getItem('theme')
@@ -62,6 +62,40 @@ function toggle_theme(){
         document.documentElement.setAttribute('data-theme', 'light');
 
     }
+}
+
+//Function that gets a modal by id, and shows it
+function open_modal(modal_name){
+	
+	if (modal_name == "create-chat-modal"){
+		document.querySelector('#create_chat_validation').style.display="none"
+		document.querySelector('#create-chat-modal #name').setCustomValidity("")
+	}
+	var modal = document.getElementById(modal_name)	
+	modal.style.display="flex"
+	//Add an event listener so that if the user clicks outside the modal, it closes it
+	document.addEventListener("keydown", function(event){
+		//Check that the area being clicked is not the modal itself, but the background arounmd it
+		console.log(event.key)
+		  if (event.key == "Escape") {
+		  
+		
+			close_modal(modal_name)	
+		  }
+		}, false);
+		modal.addEventListener("click", function(event){
+
+		  if (event.currentTarget !== event.target) {
+		    return;
+		  }
+		
+		close_modal(modal_name)	
+		}, false);
+}
+//Function that gets a modal by id, and hides it
+function close_modal(modal){
+	var modal = document.getElementById(modal)	
+	modal.style.display="none"
 }
 //Function to add a message to the page
 //Arguments are:
@@ -122,9 +156,7 @@ function display_message(content, username, time, start) {
 	if (start && at_bottom) {
 		chatSection.scrollTo(0, chatSection.scrollHeight);
 	} 
-	if (!start){
-		chatSection.scrollTo(0, chatSection.scrollHeight-scroll);
-	}
+
 }
 
 
@@ -504,17 +536,15 @@ function send_message(){
 	document.getElementById("message-input").setCustomValidity("")
 	//Get the contents of the message-input box
 	var content = document.getElementById("message-input").value
+	
 	//If the box is not empty, send the messgae
 	if (content){
 		//Do some initial setup of the request, setting the url, header, and request type
 		var xhttp = new XMLHttpRequest();
 		xhttp.open("POST", "../server/send_message.php", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		//Send the requestm, with content as the contentes of the message, and current_chat, the chat being sent to as the chat_if
+		//Send the request, with content as the contentes of the message, and current_chat, the chat being sent to as the chat_id
 		xhttp.send(encodeURI("content="+content+"&chat_id="+current_chat));
-		//Clear the message_box
-		document.getElementById("message-input").value=""
-	
 
 	} else {
 		document.getElementById("message-input").setCustomValidity("Must not be blank")
@@ -555,39 +585,7 @@ function on_load(){
 
 }
 
-//Function that gets a modal by id, and shows it
-function open_modal(modal_name){
-	
-	if (modal == "create-chat-modal"){
-		document.querySelector('#create_chat_validation').style.display="none"
-		document.querySelector('#create-chat-modal #name').setCustomValidity("")
-	}
-	var modal = document.getElementById(modal_name)	
-	modal.style.display="flex"
-	//Add an event listener so that if the user clicks outside the modal, it closes it
-	document.addEventListener("keydown", function(event){
-		//Check that the area being clicked is not the modal itself, but the background arounmd it
-		console.log(event.key)
-		  if (event.key == "Escape") {
-		  
-		
-			close_modal(modal_name)	
-		  }
-		}, false);
-		modal.addEventListener("click", function(event){
 
-		  if (event.currentTarget !== event.target) {
-		    return;
-		  }
-		
-		close_modal(modal_name)	
-		}, false);
-}
-//Function that gets a modal by id, and hides it
-function close_modal(modal){
-	var modal = document.getElementById(modal)	
-	modal.style.display="none"
-}
 
 //Function that hides the main panel
 function clear_main_panel(){

@@ -22,7 +22,7 @@ $conn = new mysqli($servername, $serverusername, $serverpassword, $dbname);
 $conn->set_charset('utf8mb4');
 //Execute the sql query to get the users that match the search string
 //This query is kinda hacky, but works well enough, and aviods collation problems
-$sql = "SELECT username FROM user WHERE LOWER( username) LIKE '%$username%' OR UPPER( username) LIKE '%$username%'";
+$sql = "SELECT username FROM user WHERE LOWER(username) LIKE LOWER('%$username%') LIMIT 50";
 $result = $conn->query($sql); 
 
 //Add the usernames from the query to the data strucure
