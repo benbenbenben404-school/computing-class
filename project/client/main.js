@@ -38,6 +38,7 @@ function mulberry32(a) {
 
 //Functions dealing with loading and setting themes
 
+cument.documentElement.setAttribute('data-theme', 'light');
 //On page load, this loads the theme from local storage, and sets it
 function load_theme() {
   //Check if the theme is set in local storage, and if its not set, set it to dark
@@ -572,6 +573,7 @@ function get_50_more() {
   xhttp.send("time=" + time + "&chat_id=" + current_chat);
 }
 
+
 //Function to send a message to the currently open chat.
 //Called when the user either presses te send button, or the enter key, and gets the message from the message box
 function send_message() {
@@ -593,6 +595,7 @@ function send_message() {
     //If message box is blank, set a validation statement on the message input, so that it shows as invalid
     document.getElementById("message-input").setCustomValidity("Must not be blank");
   }
+
 }
 
 //Function to create a chat from the modal box
@@ -637,6 +640,7 @@ function create_chat() {
   xhttp.send(encodeURI("chat_name=" + chat_name));
 }
 
+
 //This function is called to search for users from a modal. It is triggered by both the add users and create chat modals.
 //As arguments it takes the input box to use to search with, and a callback function.
 //This callback function is what contains the specific logic of what to do once the results are gotten, and is called once the results are gotten
@@ -659,6 +663,7 @@ function live_search(search_field, callback) {
   //Send the request, with the search term, as argument
   xhttp.send(encodeURI("username=" + search_term));
 }
+
 
 //Function to generate the ui when the user searches for a user to add to a chat
 //This should only be called as a callback from live_search, with usernames_searched being a list of all the usernames found
