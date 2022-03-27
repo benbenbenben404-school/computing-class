@@ -17,11 +17,9 @@
   --text-col-muted: #473232;
   --red-col: #ff6d5d;
   --main-bg: #f6f6f6;
-   --highlight-bg: #e2e2e2;
-  --highlight-bg2: #bfc2c2; 
+
   --highlight-bg: #bfc2c2;
   --highlight-bg2: #e2e2e2;
-
 }
 
 /*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
@@ -29,6 +27,7 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   color: var(--text-col);
+  /*overflow-wrap and word-break are important as they enable breaking long words into several lines, which xoud otherwisecause probelms*/
   overflow-wrap: break-word !important  ;
   word-break: break-word;
   margin: 0;
@@ -118,6 +117,8 @@ h1 {
   height: 100%; 
   /*Filter to blur and darken the backgrounf behind it*/
   backdrop-filter: blur(5px) brightness(0.7); 
+  /*This is requierd to blur the background on safari*/
+  -webkit-backdrop-filter: blur(5px) brightness(0.7); 
   /*By defualt, this should  be hidden*/
   display: none;
 }
@@ -430,58 +431,76 @@ This makes it transparent, and sets the size*/
     height: 100%;
     width: 2em;
 }
-
+/*Styling for the part at the bottom of the side panel, which contains the toggle theme and log out buttons*/
 .side-bottom {
+  /*Sets a white border on top of it*/
   border-top: var(--text-col) solid 1px;
+  /*Sets it to flex mode, and makes it so it alignbs its internal elements to the left and reight of itself*/
   display: flex;
   justify-content: space-between;
   justify-self: stretch;
+  /*Padding and margin*/
   padding: 10px 0px 0px 0px;
   margin-top: auto;
 }
 
 
-
+/*Display box is the outer box in which lists of users, such as in the add people modal are displayed. This is the one that sets the background and etc,
+while inside it, it should have a memebers box, which can scroll inside it, with the scrollbar nicely positioned*/
 .display-box {
+  /*Set the background colour, and rounded corneres*/
   background-color: var(--highlight-bg2);
   border-radius: 20px;
+  /*Sets some moargin and padding*/
   margin-top: 10px;
   padding: 20px;
+  /*Sets some positioning and layout stuff*/
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   overflow-y:hidden;
 
 }
+
+/*Inner div that goes inside a displaybox*/
 .members{
+  /*If the div is about to overflow it's parent element, it should scroll veritcally*/
   overflow-y: scroll;
   height: auto;
   display: flex;
   flex-direction: column;
 }
+
+/*Styling for individaul members display inside a display box*/
+/*Sets padding and layout to force elements to each edge of the container*/
 .members span{
   padding: 4px ;
   display: flex;
   justify-content:space-between;
 }
-
+/*Sets the font size for individaul members display inside a display box*/
 .members  b{
   font-size: 1.5em;
 }
+
+/*Aligns the add people button, and other buttons in panels, to the left hand side of theior container
+Nesceray so they dont extend accross the entire thing*/
 .main-window  .main-button{
   align-self: flex-start;
 }
 
-
+/*Sets some margin for buttons inside a display box, ie specifically the add-people button
+This is nescesayr to make sure it's always at the bottom of the panle, even if there are few users in the chat */
 .display-box .main-button{
-margin-top:auto;
+  margin-top:auto;
 }
 
 /*SVG styling*/
+/*Sets the circles in hamburger menus, ie the things nect to chat-descriptors, to white*/
 circle {
   fill: var(--text-col);
 }
-
+/*Sets the clour of the send button to white*/
 .message-box svg {
   fill: var(--text-col);
 }

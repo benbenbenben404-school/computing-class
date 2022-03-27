@@ -4,9 +4,7 @@ swapped out in code
 This means that there are a series of different panels in the code, which are hidden by default, and toggled by JS
 There are also a series of templates at the bottom. These are fragments of code such as the HTML for a message, 
 which can be duplicated into the actual code via JS
-	
 -->
-
 <html>
 
 <head>
@@ -26,8 +24,8 @@ which can be duplicated into the actual code via JS
     <!--Set the character set to use in the website, to allow unicode, such as emoji, to work -->
     <meta charset="UTF-8" />
 </head>
-<!--Main body, with function called on load, to eg set theme, and initially load messages-->
 
+<!--Main body, with function called on load, to eg set theme, and initially load messages-->
 <body onload="on_load()">
     <!--Main chat section, where messages are viewed, hidden by default-->
     <main class="main-window" id="chat-window" style="display:none">

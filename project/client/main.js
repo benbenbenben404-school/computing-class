@@ -157,7 +157,7 @@ function display_message(content, username, time, start) {
 
 
   // Create a new time in the format of day mon year, hh:mm am, ie 15 Mar 2022, 10:02 am
-  time_format = new Date(time);
+  time_format = new Date(time.replace(" ", "T"));
   let options = {
     hour: "numeric",
     minute: "numeric",
@@ -169,7 +169,8 @@ function display_message(content, username, time, start) {
   time_format = time_format.toLocaleString("en-GB", options);
 
   //set the username, time and content of the message
-  message.querySelectorAll("b")[0].innerHTML = username;
+  message.querySelectorAll("b")[0].innerHTML = username+"2";
+  // message.querySelectorAll("time")[0].innerHTML = time;
   message.querySelectorAll("time")[0].innerHTML = time_format;
   message.querySelectorAll("p")[0].innerHTML = content;
 
