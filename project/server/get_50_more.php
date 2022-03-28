@@ -1,3 +1,8 @@
+<!--Sending a request to this page gets 50 messages from before a certain time
+Arguments Are:
+chat_id: id of the chat to get messages from
+time: time to get messages before
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

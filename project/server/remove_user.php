@@ -1,3 +1,8 @@
+<!--Sending a request to this page removes a user from a chat
+Arguments Are:
+user_id: the user to remove
+chat_id: the user to remove from a chat
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

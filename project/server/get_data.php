@@ -1,3 +1,7 @@
+<!--Sending a request to this page gets all the data for a user, eg chats and messages
+Arguments Are:
+time: time to get new data since
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

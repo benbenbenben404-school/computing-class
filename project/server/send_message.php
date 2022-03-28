@@ -1,3 +1,8 @@
+<!--Sending a request to this page sends a message
+Arguments Are:
+chat_id: the chat to send a message to
+content: the message content
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

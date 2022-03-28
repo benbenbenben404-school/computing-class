@@ -1,3 +1,7 @@
+<!--Sending a request to this page adds a deletes a chat
+Arguments Are:
+chat_id: id of the chat to delete
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

@@ -1,3 +1,7 @@
+<!--Sending a request to this page creates a chat
+Arguments Are:
+chat_name: name of the chat to create
+-->
 <?php
 //Start the session, in order to allow us to access the session variables
 session_start();

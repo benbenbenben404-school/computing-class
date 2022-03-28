@@ -1,7 +1,23 @@
+/* This is the main CSS style sheet for the entire page. Outside of hiding some things with inline CSS, this is where all styles are set 
+Note that throughout this page, display:flex has been used. This is an alternate display mode, like inline and block
+Using it makes creating complex layouts much easier.
+The following is a rough list of the different parts of the code, with line numbers
+ 1.  CSS VARIABLES             - Sets the css variables of the colours used throughout     - Line 17
+ 2.  GENERAL STYLING           - General styling ie setting padding and scrollbar colours  - Line 42
+ 3.  INPUT STYLING             - Sets the style of inputs                                  - Line 108
+ 4.  BUTTON STYLES             - Sets styles on buttons                                    - Line 174
+ 5.  MODAL STYLES              - Sets the styles for modals                                - Line 230
+ 6.  LANDING LOGIN AND SIGN UP - These are grouped together as they are very similar       - Line 296
+ 7.  HEADERS                   - chat and side panel headers with associated close buttons - Line 338
+ 8.  MAIN AND SIDE WINDOW      - Styling for the main-window and side-window + contents    - Line 382
+ 9.  MESSAGES                  - Styling for messages                                      - Line 456
+ 10. MEDIA QUERIES             - Sets Media queries                                        - Line 529
+*/
 
-
+/* 1. CSS VARIABLES */
 /*CSS variables used to provide the two themes*/
-/*The variables in :root are the defualt, dark mode, variables, and the ones in [data-theme="light"] are for light mode, and must be enabled via JS*/
+/*Colors can now be used in code via var(--var), which saves having to copy and paste the colour each time */
+/*The variables in :root are the default, dark mode, variables, and the ones in [data-theme="light"] are for light mode, and must be enabled via JS*/
 :root {
   --text-col: #ffffff;
   --text-col-muted: #DDDDDD;
@@ -22,25 +38,28 @@
   --highlight-bg2: #e2e2e2;
 }
 
-/*CSS applied to everything, mostly just setting defualt margin and padding, and setting the font to poppins*/
+
+/*2. GENERAL STYLING */
+/*CSS applied to everything, mostly just setting default margin and padding, and setting the font to poppins*/
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   color: var(--text-col);
-  /*overflow-wrap and word-break are important as they enable breaking long words into several lines, which xoud otherwisecause probelms*/
-  overflow-wrap: break-word !important  ;
-  word-break: break-word;
   margin: 0;
   padding: 0;
+  /*overflow-wrap and word-break are important as they enable breaking long words into several lines, which could otherwise cause problems*/
+  overflow-wrap: break-word !important;
+  word-break: break-word;
+
 
   /*Set the scrollbar on firefox to the desired colours with the right width
-  This must be done seperately as firefox does not support the much more powerful wbkit scroll selectors*/
+  This must be done separately to the following rules, as firefox does not support the much more powerful webkit scroll selectors */
   scrollbar-color: var(--highlight-bg) var(--highlight-bg2);
   scrollbar-width: thin;
 }
 
 
-/*CSS to style the scrollbar*/
+/*CSS to style the scrollbar on platforms that support webkit scrollbar styling*/
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -68,8 +87,27 @@ body {
 
 }
 
-/*genreic styling for inputs, mostly removing some ugly defualt styles*/
-/*note that -webkit-appearance:none; is nescesary to deal with weirdness on safari*/
+/*Styling for _main-heading_*/
+h1 {
+  text-align: center;
+  font-size: 6em;
+  font-weight: 900;
+
+}
+/*SVG styling*/
+/*Sets the circles in hamburger menus, ie the things next to chat-descriptors, to the text colour*/
+circle {
+  fill: var(--text-col);
+}
+
+/*Sets the colour of the send button to the text colour*/
+.message-box svg {
+  fill: var(--text-col);
+}
+
+/*3. INPUT STYLING */
+/*generic styling for inputs, mostly removing some ugly defualt styles*/
+/*note that -webkit-appearance:none; is nescesary to deal safari having some extra defualt styles that must be removed*/
 input {
   border: none;
   outline: none;
@@ -79,336 +117,37 @@ input {
 }
 
 /*Styling for text inputs, as used in modals and the login page*/
-/*/Sets the bg-color, font size, padding, and width*/
-input[type=text], input[type=password] {
-
+/*Sets the bg-color, font size, padding, and width*/
+input[type=text],
+input[type=password] {
   background-color: var(--highlight-bg);
   padding: 10px 10px 10px 20px;
   color: var(--text-col);
   font-size: 2em;
   border-radius: 1.5em;
-  width:100%;
+  width: 100%;
 }
+
 /*If the input is invalid, give it a red border*/
-/*the form:invalid is required for this to work with the message box*/
-form:invalid, .modal input:invalid{
-  border:3px solid var(--red-col) !important;
+/*the form:invalid is required for this to work with the message box, which is technically a form with an input box and button */
+form:invalid,
+.modal input:invalid {
+  border: 3px solid var(--red-col) !important;
 }
-/*Styling the placeholder text  inside text-inputs*/
+
+/*Styles the placeholder text inside text-inputs to be a slightly lighter colour than other text*/
 ::placeholder {
   color: var(--text-col-muted);
 }
 
-/*Styling for _main-heading_*/
-h1 {
-  text-align: center;
-  font-size: 6em;
-  font-weight: 900;
-
-}
-/*Styling for the background that blurs the paage behind a modal*/
-.modal-bg{
-  /*Fix the position to take up the entire page, andto have a higher z index than the page, amikng it dipaly on top*/
-  position: fixed; 
-  z-index: 1; 
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%; 
-  /*Filter to blur and darken the backgrounf behind it*/
-  backdrop-filter: blur(5px) brightness(0.7); 
-  /*This is requierd to blur the background on safari*/
-  -webkit-backdrop-filter: blur(5px) brightness(0.7); 
-  /*By defualt, this should  be hidden*/
-  display: none;
-}
-/*Styling for the actual modal itself, which is a child of modal-bg*/
-.modal{
-  /*Set the padding, and margin for it to be centered*/
-  padding: 20 50 20 50;
-  margin: auto auto; 
-  /*Set the bg-color*/
-  background-color: var(--main-bg);
-/*Sets it to have rounded corners*/
-  border-radius: 50px;
-  /*Set it to have min and max dimensioms, and also to use flex*/
-  min-height: 500px;
-  min-width: 200px;
-  max-width: 800px;
-  max-height:80%;
-  display: flex;
-  flex-direction: column;
-  flex-grow:1;
-}
-/*Buttons in modals should be centered*/
-.modal button{
-align-self: center;
-}
-/*Text inputs in modals should take up the entire width*/
-.modal input[type=text]{
-  width: 100%;
-}
-/*The header of a modal should have its items with space between them
-As the modal header contains both the name of the modal, and the button to close it, this aligns these to the left and right of the modal 
-*/
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-}
-/*The name of the modal should be 3em big*/
-.modal-header>h2 {
-  font-size: 3em;
-}
-/*The button to close the modal should be 2em big*/
-.modal-header >span {
-  font-size: 2em;
-
-}
-
-/*_Used on Lanidng page, signup page, and login page to center items and keep things centered. Uses Flexbox for layout purposes*/
-.center-container {
-  /*Center it on the page*/
-  margin: auto;
-  /*Flexbox things to keep itself, and its contents, centered vertically and horizontally*/
-  justify-self: center;
-  align-self: center;
-  flex-grow: 50;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-/*This should have a max width of 800px, so it doesnt stretch across the entire page*/
-  max-width: 800px;
-
-}
-/*Small text that is diplayed to give the user information about failed validaion*/
-.validation-space {
-width:100%;
-color:var(--red-col);
-text-align:center;
-font-size:0.8em;
-}
-
-/*Styling for the login and signup forms*/
-/*This keeps the form centerd with flex*/
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-}
-/*Buttons in center contaqiners, as used on the landing page, log in and sign ups forms should be cntered*/
-.center-container .main-button {
-  align-self: center;
-
-}
-
-/*The following are classes for th "main" button, which is used as a larg nbutton, and "small" button, which is a smaller button, used in lists*/
-/*Note that this class can bea dded to "a" elements, input elements, and button elements, keeping it versaLTILE*/
-.small-button, .main-button, .small-indicator{
-  /*Remove border and text decoration from the button, adn set the backgound colour to red*/
-  border: none;
-  background-color: var(--red-col);
-  text-decoration: none;
-  /*Set it to have rounded corners*/
-  border-radius: 1.5em;
-  /*Set the text to be bold, and center aligned*/
-  font-weight: 900;
-  text-align: center;
-
-}
-/*Main bitton has a larger min-width, big font size, and big margin*/
-.main-button {
-  font-size: 3em;
-  min-width: 300px;
-  margin: 10px 0px 0px 0px;
-}
-/*Small button has a smaller text size, min-width, and less padding*/
-.small-button{
-  font-size: 1em;
-  min-width: 100px;
-  padding: 2px 5px 2px 5px;
-
-}
-/*This is a small indicator, which looks roughly like a small-button, but greyed out. Used to inidcate a space where a smallbutton has been clicked*/
-.small-indicator{
-  border: var(--red-col) solid 3px;
-  background-color: var(--main-bg);
-  font-size: 1em;
-  min-width: 100px;
-  align-self: center;
-  padding: 2px 5px 2px 5px;
-
-}
-
-
-/*Media query to rearange the page on mobile, so that panels take the full width, and are not displayd nect to each other*/
-
-@media (max-width: 800px) {
-
-  .main-window,
-  .side-window {
-    width: 100% !important;
-  }
-  /*Show the button to close a chat on mobile only*/
-  .chat-header>span {
-    display: inline-block !important;
-  }
-  
-  .modal{padding: 20 30 20 30;}
-  
-  .modal-header>h2 {
-    font-size: 2em;
-  }
-  .modal input[type=text]{
-  font-size: 1.5em;
-}
-/*The button to close the modal should be 2em big*/
-.modal-header >span {
-  font-size: 1.4em;
-
-}
-}
-
-
-/*Second media query which activates on very small screens, such as older/cheaper phone
-Mostly resizing/remiving padding, to make the ui as usable as possible*/
-@media (max-width: 400px) {
-    .modal {padding: 15 10 15 10;}
-    .modal input[type=text]{font-size: 1em;}
-  .main-button{
-    padding:0 10px 0 10px; 
-    font-size: 2em;
-    min-width:200px
-  }
-}
-/*Styling for the header of the chat, and the header of the side
-Sets the bottom border, and some formatting*/
-.chat-header,.side-header {
-  border-width: 0px;
-  border-bottom-width: 1px;
-  border-style: solid;
-  border-color: var(--text-col);
-  display:flex;
-  justify-content:space-between;
-}
-
-/*Sets the size of the text in the chat headers*/
-.chat-header>h2 ,.side-header>h2 {
-  font-size: 2em;
-  display: inline-block;
-}
-
-
-/*Sets the alignment of the button in the side header*/
-.side-header>button {
-  align-self: center;
-}
-
-/*Formatting for the cross button that closes a panel on mobile
-Sets colorm size, and stroke-width*/
-.close {
-    align-self:center;
-    height:2em;
-    width:2em;
-    stroke:var(--red-col);
-    stroke-width:20;
-    stroke-linecap:round;
-}
-/*float the close button to the right, and hide it by defualt*/
-.chat-header>.close {
-  float:right;
-  display: none;
-}
-/*Styling for main and side panels*/
-.main-window,.side-window {
-  padding: 0em 1em 1em 1em;
-display: flex;
-  flex-direction: column;
-  height: 100%;
-
-}
-/*Sets the width of the main and side panles, and hides main panles by defualt*/
-.main-window {width: 70%; display:none;}
-.side-window {width: 30%;margin-left:auto;}
-
-/*Set the container of the  chat descriptors to scroll if the elements overfolow, insted of oweverlowing the window*/
-#chat-descriptor-container{
-  overflow-y:scroll;
-
-}
-/*Styling for the chat descriptor, this being a single entry in the list of chats the user is in*/
-.chat-descriptor {
-  display: flex;
-  padding: 2px 0px 2px 0px;
-  font-size: 1.5em;
-
-}
-/*Set some formatting for the chat descriptor*/
-.chat-descriptor>p {
-  display: inline;
-  margin-right: auto;
-  overflow:hidden;
-}
-
-
-/*Styling for notification bubbles*/
-.chat-descriptor>span {
-  /*Set thier size, and make them circles*/
-  height: 1.5em;
-  width: 1.5em;
-  border-radius: 50%;
-  /*Bold the font, set the background color, center align the text, and hide it by defiualt*/
-  text-align: center;
-  background-color: var(--red-col);
-  font-weight: 900;
-  display:none;
-}
-
-/*Set the container of the  chat  to scroll if the elements overfolow, insted of oweverlowing the window*/
-.chat {
-  flex-grow: 1;
-  overflow-y: scroll;
-}
-/*FORMATTING FOR MESSAGES*/
-
-/*Set the time to be muted in colour, slighlt smaller then the rest of the text, and with some padding*/
-.message>span>time {
-  color: var(--text-col-muted);
-  font-size: 0.8em;
-  padding: 0 5px 0 5px;
-}
-
-/*Set some formatting on the mesage text*/
-.message>span {
-  display: flex;
-  align-items: center;
-}
-/*If a message is sent by the currently logged in user, align it to the right*/
-.user-message {
-  justify-content: flex-end;
-  text-align: right;
-}
-/*If a message is sent by the currently logged in user, align the username and time to the left*/
-.user-message>span {
-  justify-content: flex-end;
-}
-/*If a message is sent by the currently logged in user, switch the position of the time and username, so that the username is always on the edge*/
-.user-message>span>b {
-  order: 2;
-
-}
-
-/*MESSAGE BOX*/
 /*This is the styling for the box that the user types in to send a message*/
-/*Note that this is composed of an outer div, with an input box and button inside it*/
-
+/*Note that this is composed of an outer form element, with an input box and button inside it*/
 /*Set the background color, padding, display mode, and  border radius of the outer div*/
 .message-box {
   display: flex;
   padding: 10px 10px 10px 20px !important;
-  /*Note that calc() is used here to setthe roundered edge of the div, so that it is always perfetly circular.
-  This is as the elemetns inside the div have sizes specified in ems, while the padding is in px, so calc() must be used to add these*/
+  /*Note that calc() is used here to set the rounded edge of the div, so that it is always perfectly circular.
+  This is as the elements inside the div have sizes specified in ems, while the padding is in px, so calc() must be used to add these*/
   border-radius: calc(0.5em + 20px) !important;
   background-color: var(--highlight-bg);
 }
@@ -428,14 +167,277 @@ display: flex;
 This makes it transparent, and sets the size*/
 .message-box>button {
   background-color: transparent;
-    height: 100%;
-    width: 2em;
+  height: 100%;
+  width: 2em;
 }
+
+/* 4. BUTTON STYLES */
+/*The following are classes for the "main" button, which is used as a large button, and "small" button, which is a smaller button, used in lists, and the small-indicators, used as indicators
+of buttons that have been pressed*/
+/*Note that these classes can be added to "a" elements, input elements, and button elements, keeping it versatile*/
+.small-button,
+.main-button,
+.small-indicator {
+  /*Remove border and text decoration from the button, and set the background colour to red*/
+  border: none;
+  background-color: var(--red-col);
+  text-decoration: none;
+  /*Set it to have rounded corners*/
+  border-radius: 1.5em;
+  /*Set the text to be bold, and center aligned*/
+  font-weight: 900;
+  text-align: center;
+
+}
+
+/*Main button has a larger min-width, big font size, and big margin*/
+.main-button {
+  font-size: 3em;
+  min-width: 300px;
+  margin: 10px 0px 0px 0px;
+}
+
+/*Small button has a smaller text size, min-width, and less padding*/
+.small-button {
+  font-size: 1em;
+  min-width: 100px;
+  padding: 2px 5px 2px 5px;
+}
+
+/*This is a small indicator, which looks roughly like a small-button, but greyed out. Used to indicate a space where a smallbutton has been clicked*/
+.small-indicator {
+  border: var(--red-col) solid 3px;
+  background-color: var(--main-bg);
+  font-size: 1em;
+  min-width: 100px;
+  align-self: center;
+  padding: 2px 5px 2px 5px;
+
+}
+/*Aligns the add people button, and other buttons in panels, to the left hand side of their container
+Nescesary so they don't extend across the entire thing*/
+.main-window .main-button {
+  align-self: flex-start;
+}
+
+/*Sets some margin for buttons inside a display box, ie specifically the add-people button
+This is nescesary to make sure it's always at the bottom of the panel, even if there are few users in the chat */
+.display-box .main-button {
+  margin-top: auto;
+}
+
+
+/*5. MODAL STYLES */
+
+/*Styling for the background that blurs the page behind a modal*/
+.modal-bg {
+  /*Fix the position to take up the entire page, and to have a higher z index than the page, making it display on top*/
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /*Filter to blur and darken the background behind it*/
+  backdrop-filter: blur(5px) brightness(0.7);
+  /*This is required to blur the background on safari*/
+  -webkit-backdrop-filter: blur(5px) brightness(0.7);
+  /*By defualt, this should  be hidden*/
+  display: none;
+}
+
+/*Styling for the actual modal itself, which is a child of modal-bg, and displays on top of the modal background*/
+.modal {
+  /*Set the padding, and margin for it to be centered*/
+  padding: 20 50 20 50;
+  margin: auto auto;
+  /*Set the bg-color*/
+  background-color: var(--main-bg);
+  /*Sets it to have rounded corners*/
+  border-radius: 50px;
+  /*Set it to have min and max dimensions, and also to use flex*/
+  min-height: 500px;
+  min-width: 200px;
+  max-width: 800px;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/*Buttons in modals should be centered*/
+.modal button {
+  align-self: center;
+}
+
+/*Text inputs in modals should take up the entire width*/
+.modal input[type=text] {
+  width: 100%;
+}
+
+/*The header of a modal should have its items with space between them
+As the modal header contains both the name of the modal, and the button to close it, this aligns these to the left and right of the modal 
+*/
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*The name of the modal should be 3em big*/
+.modal-header>h2 {
+  font-size: 3em;
+}
+
+/*The button to close the modal should be 2em big*/
+.modal-header>span {
+  font-size: 2em;
+
+}
+/*6. LANDING, LOGIN, AND SIGN UP */
+
+/*_Used on landing page, sign up page, and login page to center items and keep things centered. Uses flex for layout purposes*/
+.center-container {
+  /*Center it on the page*/
+  margin: auto;
+  /*Flexbox things to keep itself, and its contents, centered vertically and horizontally*/
+  justify-self: center;
+  align-self: center;
+  flex-grow: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  /*This should have a max width of 800px, so it doesn't stretch across the entire page*/
+  max-width: 800px;
+
+}
+
+/*Small text that is displayed to give the user information about failed validation*/
+.validation-space {
+  width: 100%;
+  color: var(--red-col);
+  text-align: center;
+  font-size: 0.8em;
+}
+
+/*Styling for the login and sign up forms*/
+/*This keeps the form centered with flex*/
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*Buttons in center containers, as used on the landing page, log in and sign ups forms should be centered*/
+.center-container .main-button {
+  align-self: center;
+
+}
+
+
+/* 7. HEADERS */
+/*Styling for the header of the chat, and the header of the side panel
+Sets the bottom border, and some formatting*/
+.chat-header,
+.side-header {
+  border-width: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: var(--text-col);
+  display: flex;
+  justify-content: space-between;
+}
+
+/*Sets the size of the text in the chat headers*/
+.chat-header>h2,
+.side-header>h2 {
+  font-size: 2em;
+  display: inline-block;
+}
+
+
+/*Sets the alignment of the button in the side header
+This makes it not expand upwards to fill the entire height*/
+.side-header>button {
+  align-self: center;
+}
+
+/*Formatting for the cross button that closes a panel on mobile
+Sets color, size, and stroke-width*/
+.close {
+  align-self: center;
+  height: 2em;
+  width: 2em;
+  stroke: var(--red-col);
+  stroke-width: 20;
+  stroke-linecap: round;
+}
+
+/*hide the close button by defualt*/
+.chat-header>.close {
+  display: none;
+}
+
+
+/*8. MAIN AND SIDE WINDOW */
+/*Styling for main and side panels*/
+.main-window,
+.side-window {
+  padding: 0em 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/*Sets the width of the main and side panels, and hides main panels by defualt*/
+.main-window {
+  width: 70%;
+  display: none;
+}
+.side-window {
+  width: 30%;
+  margin-left: auto;
+}
+
+/*Set the container of the  chat descriptors to scroll if the elements overflow, instead of overflowing the window*/
+#chat-descriptor-container {
+  overflow-y: scroll;
+}
+
+/*Styling for the chat descriptor, this being a single entry in the list of chats the user is in*/
+.chat-descriptor {
+  display: flex;
+  padding: 2px 0px 2px 0px;
+  font-size: 1.5em;
+
+}
+
+/*Set some formatting for the text in a chat descriptor*/
+.chat-descriptor>p {
+  display: inline;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+
+/*Styling for notification bubbles*/
+.chat-descriptor>span {
+  /*Set their size, and make them circles*/
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
+  /*Bold the font, set the background color, center align the text, and hide it by defualt*/
+  text-align: center;
+  background-color: var(--red-col);
+  font-weight: 900;
+  display: none;
+}
+
 /*Styling for the part at the bottom of the side panel, which contains the toggle theme and log out buttons*/
 .side-bottom {
   /*Sets a white border on top of it*/
   border-top: var(--text-col) solid 1px;
-  /*Sets it to flex mode, and makes it so it alignbs its internal elements to the left and reight of itself*/
+  /*Sets it to flex mode, and makes it so it aligns its internal elements to the left and right of itself*/
   display: flex;
   justify-content: space-between;
   justify-self: stretch;
@@ -445,62 +447,134 @@ This makes it transparent, and sets the size*/
 }
 
 
+/*Set the container of the chat to scroll if the elements overflow, instead of overflowing the window*/
+.chat {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+/*9. MESSAGES*/
+
+/*Set the time to be muted in colour, slightly smaller then the rest of the text, and with some padding*/
+.message>span>time {
+  color: var(--text-col-muted);
+  font-size: 0.8em;
+  padding: 0 5px 0 5px;
+}
+
+/*Set some formatting on the message text*/
+.message>span {
+  display: flex;
+  align-items: center;
+}
+
+/*If a message is sent by the currently logged in user, align it to the right*/
+.user-message {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/*If a message is sent by the currently logged in user, align the username and time to the left*/
+.user-message>span {
+  justify-content: flex-end;
+}
+
+/*If a message is sent by the currently logged in user, switch the position of the time and username, so that the username is always on the outside edge*/
+.user-message>span>b {
+  order: 2;
+
+}
+
+
 /*Display box is the outer box in which lists of users, such as in the add people modal are displayed. This is the one that sets the background and etc,
-while inside it, it should have a memebers box, which can scroll inside it, with the scrollbar nicely positioned*/
+while inside it, it should have a members box, which can scroll inside it, with the scrollbar nicely positioned*/
 .display-box {
-  /*Set the background colour, and rounded corneres*/
+  /*Set the background colour, and rounded corners*/
   background-color: var(--highlight-bg2);
   border-radius: 20px;
-  /*Sets some moargin and padding*/
+  /*Sets some margin and padding*/
   margin-top: 10px;
   padding: 20px;
   /*Sets some positioning and layout stuff*/
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow-y:hidden;
-
+  overflow-y: hidden;
 }
 
-/*Inner div that goes inside a displaybox*/
-.members{
-  /*If the div is about to overflow it's parent element, it should scroll veritcally*/
+/*Inner div that goes inside a display-box*/
+.members {
+  /*If the div is about to overflow it's parent element, it should scroll vertically*/
   overflow-y: scroll;
   height: auto;
   display: flex;
   flex-direction: column;
 }
 
-/*Styling for individaul members display inside a display box*/
+/*Styling for individual members display inside a display box*/
 /*Sets padding and layout to force elements to each edge of the container*/
-.members span{
-  padding: 4px ;
+.members span {
+  padding: 4px;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-/*Sets the font size for individaul members display inside a display box*/
-.members  b{
+
+/*Sets the font size for individual members display inside a display box*/
+.members b {
   font-size: 1.5em;
 }
 
-/*Aligns the add people button, and other buttons in panels, to the left hand side of theior container
-Nesceray so they dont extend accross the entire thing*/
-.main-window  .main-button{
-  align-self: flex-start;
+
+
+/* 10. MEDIA QUERIES */
+
+/*Media query to rearrange the page on mobile, so that panels take the full width, and are not displayed next to each other
+Also changes modals to have less padding and smaller text, making them display better on mobile*/
+@media (max-width: 800px) {
+  .main-window,
+  .side-window {
+    width: 100% !important;
+  }
+
+  /*Show the button to close a chat on mobile only*/
+  .chat-header>span {
+    display: inline-block !important;
+  }
+  /* Change the modal to have less padding, and smaller text, making it display nicer on mobile */
+  .modal {
+    padding: 20 30 20 30;
+  }
+
+  .modal-header>h2 {
+    font-size: 2em;
+  }
+
+  .modal input[type=text] {
+    font-size: 1.5em;
+  }
+
+  /*The button to close the modal should be 2em big*/
+  .modal-header>span {
+    font-size: 1.4em;
+
+  }
 }
 
-/*Sets some margin for buttons inside a display box, ie specifically the add-people button
-This is nescesayr to make sure it's always at the bottom of the panle, even if there are few users in the chat */
-.display-box .main-button{
-  margin-top:auto;
-}
 
-/*SVG styling*/
-/*Sets the circles in hamburger menus, ie the things nect to chat-descriptors, to white*/
-circle {
-  fill: var(--text-col);
-}
-/*Sets the clour of the send button to white*/
-.message-box svg {
-  fill: var(--text-col);
+/*Second media query which activates on very small screens, such as older/cheaper phone
+Mostly resizing/removing padding, to make the ui as usable as possible*/
+@media (max-width: 400px) {
+  .modal {
+    padding: 15 10 15 10;
+  }
+
+  .modal input[type=text] {
+    font-size: 1em;
+  }
+
+  .main-button {
+    padding: 0 10px 0 10px;
+    font-size: 2em;
+    min-width: 200px
+  }
 }

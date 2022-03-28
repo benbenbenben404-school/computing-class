@@ -38,7 +38,7 @@ function mulberry32(a) {
 
 //Functions dealing with loading and setting themes
 
-cument.documentElement.setAttribute('data-theme', 'light');
+document.documentElement.setAttribute('data-theme', 'light');
 //On page load, this loads the theme from local storage, and sets it
 function load_theme() {
   //Check if the theme is set in local storage, and if its not set, set it to dark
@@ -78,6 +78,10 @@ function on_load() {
   document
     .querySelector("#message-input")
     .addEventListener("keyup", function (event) {
+            //If the message box is not blank, set it as valid
+            if (document.getElementById("message-input").value != "") {
+              document.getElementById("message-input").setCustomValidity("");
+            }
       // Number 13 is the "Enter" key on the keyboard
       if (event.keyCode === 13) {
         // Cancel the default action, if needed
@@ -85,10 +89,7 @@ function on_load() {
         //Send the message
         send_message();
       }
-      //If the message box is not blank, set it as valid
-      if (document.getElementById("message-input").value != "") {
-        document.getElementById("message-input").setCustomValidity("");
-      }
+
     });
 }
 
